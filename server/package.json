@@ -1,0 +1,18 @@
+{
+  "name": "neptume",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "mongodb": "^6.12.0",
+    "openai": "^4.77.0",
+    "qs": "^6.13.1",
+    "viem": "^2.21.60"
+  }
+}
