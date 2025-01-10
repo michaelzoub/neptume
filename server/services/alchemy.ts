@@ -11,17 +11,19 @@ import { extractTxHash } from "../utils/extracthash"
 function getChainName(chainId: number): string | undefined {
     switch (chainId) {
         case chains.arbitrum:
-            return "arbitrum";
+            return "arb-mainnet";
         case chains.avalanche:
             return "avalanche";
         case chains.base:
-            return "base";
+            return "base-mainnet";
         case chains.optimism:
-            return "optimism";
+            return "opt-mainnet";
         case chains.polygon:
-            return "polygon";
+            return "polygon-mainnet";
         case chains.worldchain:
             return "worldchain";
+        case chains.ethereum:
+            return "eth-mainnet"
         default:
             console.error("Unknown chain ID:", chainId);
             return undefined;
@@ -93,11 +95,13 @@ export async function alchemyQuery(type: string, message: string, address: strin
             console.log("Fetching NFT details...");
             params.method = "alchemy_getNFTsForOwner";
             params.params = [address]
-            const nftResponse = await fetch(ALCHEMY_API_URL, {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(params),
+            const nftResponse = await fetch(`https://${chain}.g.alchemy.com/nft/v3/${ALCHEMY_API}/getNFTsForOwner?owner=${address}&withMetadata=true&includeFilters[]=SPAM&spamConfidenceLevel=HIGH&pageSize=100`, {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json"
+                },
             });
+            console.log("NFT response:", nftResponse)
             const nftData = await nftResponse.json()
             console.log(`NFT details for owner ${message}:`, nftData)
             return nftData.result

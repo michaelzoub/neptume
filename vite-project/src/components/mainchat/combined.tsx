@@ -4,7 +4,10 @@ import OpenSign from "./openSign"
 import { openState, rotateState, scaleState, translateState } from "../../atoms/opensign"
 import { useAtom } from "jotai"
 import { motion } from "framer-motion"
+import Recommendations from "./recommendations"
+import AddressContexts from "./addressContexts"
 import Modal from "../modal"
+import { useState } from "react"
 
 export default function Combined({color, secondary}: {color: string, secondary: string}) {
 
@@ -12,6 +15,7 @@ export default function Combined({color, secondary}: {color: string, secondary: 
     const [translate, setTranslate] = useAtom(translateState)
     const [rotate, setRotate] = useAtom(rotateState)
     const [scale, setScale] = useAtom(scaleState)
+    const [entered, setEntered] = useState(false)
 
 
     function handleClose() {
@@ -33,11 +37,13 @@ export default function Combined({color, secondary}: {color: string, secondary: 
                             }}
             >
             <div className="p-2 px-4 h-[10%] flex items-center justify-between border-b border-neutral-600">
-                <div className="text-neutral-500 bg-neutral-700 flex items-center justify-center text-sm w-[34px] h-[34px] rounded-lg border-[1px] border-neutral-600">🤖</div>
+                <button className="text-neutral-500 bg-neutral-700 flex items-center justify-center text-sm w-[34px] h-[34px] rounded-lg border-[1px] border-neutral-600" onMouseEnter={() => setEntered(true)}>🤖</button>
+                <AddressContexts state={entered}></AddressContexts>
                 <h2 className="text-neutral-500">Neptume</h2>
                 <button className="text-neutral-500 bg-neutral-700 p-1 px-[10px] rounded-lg border-[1px] border-neutral-600" onClick={() => handleClose()}>✖</button>
             </div>
             <Messages color={color} secondary={secondary} />
+            <Recommendations></Recommendations>
             <Input color={color}  />
             </motion.div>
     )

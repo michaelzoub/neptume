@@ -48,7 +48,9 @@ export default function Input({color}: {color: string}) {
         ])
         const additionalInfo = await chatUpdate(query)
         const neededInfo = additionalInfo.neededInfo
-        await sendTransaction(neededInfo.chaindId, neededInfo.to, JSON.parse(neededInfo.abi), neededInfo.wei, wallets)
+        if (neededInfo.wei !== 0) {
+            await sendTransaction(neededInfo.chaindId, neededInfo.to, JSON.parse(neededInfo.abi), neededInfo.wei, wallets)
+        }
         setMessage("")
         setTimeout(() => {
             console.log(messages)

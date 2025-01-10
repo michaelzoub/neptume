@@ -120,10 +120,14 @@ For price queries:
 - Include 24h change percentage
 - Example: "ETH price: ${ethPrice}"
 
+For NFT queries:
+Show NFTs user owns (by name in json)
+Depending on question you can also show the total count: ${json.totalCount}
+
 Current Ethereum price: ${ethPrice}
 Original query: "${message}"
 Query type: "${type}"
-Wallet data: ${JSON.stringify(json, null, 2)}
+Wallet data: ${type == "nft" ? "" : JSON.stringify(json, null, 2)}
 
 Provide a single, clear sentence response focusing only on the requested information.`
             }
