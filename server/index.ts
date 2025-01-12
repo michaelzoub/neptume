@@ -26,7 +26,7 @@ Bun.serve({
                 //calling ai
                 const body = await req.json()
                 console.log("Body: ", body)
-                const response = await sendInitMsg(body.message)
+                const response = await sendInitMsg(body.message, body.contextInfo)
                 console.log("Initial message received from AI: ", response)
                 //turn into data object depending on response
                 const object = await type(response, body.address, body.message, body.chainId)

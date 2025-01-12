@@ -2,6 +2,7 @@ import Input from "./input"
 import Messages from "./messages"
 import OpenSign from "./openSign"
 import { openState, rotateState, scaleState, translateState } from "../../atoms/opensign"
+import { enteredAtom } from "../../atoms/entered"
 import { useAtom } from "jotai"
 import { motion } from "framer-motion"
 import Recommendations from "./recommendations"
@@ -15,7 +16,7 @@ export default function Combined({color, secondary}: {color: string, secondary: 
     const [translate, setTranslate] = useAtom(translateState)
     const [rotate, setRotate] = useAtom(rotateState)
     const [scale, setScale] = useAtom(scaleState)
-    const [entered, setEntered] = useState(false)
+    const [entered, setEntered] = useAtom(enteredAtom)
 
 
     function handleClose() {
@@ -37,7 +38,7 @@ export default function Combined({color, secondary}: {color: string, secondary: 
                             }}
             >
             <div className="p-2 px-4 h-[10%] flex items-center justify-between border-b border-neutral-600">
-                <button className="text-neutral-500 bg-neutral-700 flex items-center justify-center text-sm w-[34px] h-[34px] rounded-lg border-[1px] border-neutral-600" onMouseEnter={() => setEntered(true)}>🤖</button>
+                <button className="text-neutral-500 bg-neutral-700 flex items-center justify-center text-sm w-[34px] h-[34px] rounded-lg border-[1px] border-neutral-600" onMouseEnter={() => setEntered((e) => !e)}>🤖</button>
                 <AddressContexts state={entered}></AddressContexts>
                 <h2 className="text-neutral-500">Neptume</h2>
                 <button className="text-neutral-500 bg-neutral-700 p-1 px-[10px] rounded-lg border-[1px] border-neutral-600" onClick={() => handleClose()}>✖</button>

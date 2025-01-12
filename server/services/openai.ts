@@ -8,11 +8,11 @@ const openai = new OpenAI({
     dangerouslyAllowBrowser: true
 });
 
-export async function sendInitMsg(message: string) {
+export async function sendInitMsg(message: string, contextInfo: string) {
 
-    const isTransaction = /\b(0x[a-fA-F0-9]{40})\b|\b(\d+(\.\d+)?\s*(ETH|WETH|BTC))\b/.test(message);
+    const isTransaction = /\b(0x[a-fA-F0-9]{40})\b|\b(\d+(\.\d+)?\s*(ETH|WETH|BTC))\b/.test(message)
   
-    if (isTransaction) {
+    if (isTransaction || message.includes(contextInfo)) {
       return "transaction";
     }
 

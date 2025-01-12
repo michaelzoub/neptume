@@ -3,10 +3,12 @@ import { POST } from "../api/server";
 import { messagesAtom } from "../atoms/messages";
 import { Query } from "../interfaces/Query";
 import { Message } from "../interfaces/Message";
+import { checkIfName } from "../utils/checkIfName";
 
 export async function chatUpdate(query: Query) {
     const store = getDefaultStore();
-    const response: Message = await POST(query);
+    const ifNameQuery = checkIfName(query)
+    const response: Message = await POST(ifNameQuery);
 
     if (response) {
         const currentMessages = store.get(messagesAtom);

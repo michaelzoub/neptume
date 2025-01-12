@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { messageAtom } from "../../atoms/messages"
 import { messagesAtom } from "../../atoms/messages"
+import { enteredAtom } from "../../atoms/entered"
 import { chatUpdate } from "../../state/chatUpdate"
 import { address, chainId } from "../../atoms/walletinfo"
 import { useWallets } from "@privy-io/react-auth"
@@ -15,6 +16,7 @@ export default function Input({color}: {color: string}) {
     const [message, setMessage] = useAtom(messageAtom)
     const [messages, setMessages] = useAtom(messagesAtom)
     const [hovered, setHovered] = useState(false)
+    const [entered, setEntered] = useAtom(enteredAtom)
 
     const [addresss] = useAtom(address)
     const [chainIdd] = useAtom(chainId)
@@ -25,12 +27,14 @@ export default function Input({color}: {color: string}) {
         console.log(message)
         //keep optimism for now
         console.log(`address and chainid: ${addresss}, ${chainIdd}`)
+        setEntered(false)
         const timeSplit = new Date().toLocaleTimeString().split(":")[0] + ":" + new Date().toLocaleTimeString().split(":")[1]
         const query = {
             message: message,
             address: addresss,
             time: new Date().toString(),
-            chainId: chainIdd
+            chainId: chainIdd,
+            contextInfo: ""
         }
         setMessages((prev) => [...prev,
             {

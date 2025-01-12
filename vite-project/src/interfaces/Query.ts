@@ -2,5 +2,6 @@ export interface Query {
     message: string,
     address: string,
     time: string,
-    chainId: number
+    chainId: number,
+    contextInfo: any
 }

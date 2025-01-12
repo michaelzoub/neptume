@@ -6,6 +6,7 @@ import { chainId } from "../../atoms/walletinfo"
 import { address } from "../../atoms/walletinfo"
 import { useAtom } from "jotai"
 import { chatUpdate } from "../../state/chatUpdate"
+import { useEffect } from "react"
 
 const recommendations = [
     "What's my total balance?",
@@ -17,7 +18,7 @@ export default function Recommendations() {
 
     const [recommend, setRecommended] = useAtom(recommendation)
     const [message, setMessage] = useAtom(messageAtom)
-    const [, setMessages] = useAtom(messagesAtom)
+    const [messages, setMessages] = useAtom(messagesAtom)
     const [chain] = useAtom(chainId)
     const [addy] = useAtom(address)
 
@@ -29,7 +30,8 @@ export default function Recommendations() {
                     message: msg,
                     address: addy,
                     time: new Date().toString(),
-                    chainId: chain
+                    chainId: chain,
+                    contextInfo: ""
                 }
                 setMessages((prev) => [...prev,
                     {
@@ -48,8 +50,15 @@ export default function Recommendations() {
                 const additionalInfo = await chatUpdate(query)
     }
 
+    useEffect(() => {
+        //setRecommended(false)
+        if (messages.length >= 2) {
+            setRecommended(false)
+        }
+    }, [message])
+
     return (
-        <motion.div className={`${recommend? "flex flex-row gap-2 w-fit mx-auto my-2 justify-center" : "flex flex-row gap-2 w-fit mx-auto my-2 justify-center"}`}
+        <motion.div className={`${recommend? "flex flex-row gap-2 w-fit mx-auto my-2 justify-center" : "hidden flex flex-row gap-2 w-fit mx-auto my-2 justify-center"}`}
             initial={{
                 scale: 1,
                 opacity: 1
