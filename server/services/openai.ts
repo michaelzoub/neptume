@@ -37,7 +37,7 @@ export async function sendInitMsg(message: string, contextInfo: string) {
     });
     
     const content = res?.choices[0].message.content?.toLowerCase().trim() || "";
-    const validTypes = ["question", "swap", "modification"];
+    const validTypes = ["question", "swap", "modification", "transaction"];
     return validTypes.includes(content) ? content : "question"; 
 }
 
@@ -59,12 +59,30 @@ export async function sendSecondMsg(message: string, additionalInfo: string) {
     return res?.choices[0].message.content || "";
 }
 
-export async function swapCall(message: string) {
+export async function swapCallFrom(message: string) {
     const res = await openai.chat.completions.create({
         messages: [
             {
                 role: "system",
-                content: `Classify the tokens mentioned in the user's query into "from" (tokens to sell) and "to" (tokens to buy). Respond in the format(OBJECT): "from: ["1", "2"], to: ["1"]" or "No tokens found." Provide only the classification.`
+                content: `Find the tokens user wants to swap from (contract address) and format is as an array of strings. Respond in the format: "["0x283450345", "0x48503458"]" or "No tokens found."`
+            },
+            {
+                role: "user",
+                content: message
+            }
+        ],
+        model: "gpt-4o-mini-2024-07-18",
+        max_tokens: 65
+    });
+    return res?.choices[0].message.content || "";
+}
+
+export async function swapCallTo(message: string) {
+    const res = await openai.chat.completions.create({
+        messages: [
+            {
+                role: "system",
+                content: `Find the tokens user wants to swap to (contract address) and format is as an array of strings. Respond in the format: "["0x283450345"]" or "No tokens found."`
             },
             {
                 role: "user",
@@ -189,6 +207,25 @@ export async function sendTransactionAddress(message: string) {
             {
                 role: "system",
                 content: `Your goal is to identify the address we are sending money to. Only respond with the address, with no additional text or information. If no address is found, respond with nothing.`
+            },
+            {
+                role: "user",
+                content: message
+            }
+        ],
+        model: "gpt-4o-mini-2024-07-18",
+        max_tokens: 36
+    });
+    return res?.choices[0].message.content || "";
+}
+
+export async function modificationType(message: string) {
+    //https://docs.metamask.io/wallet/reference/json-rpc-methods/wallet_watchasset/
+    const res = await openai.chat.completions.create({
+        messages: [
+            {
+                role: "system",
+                content: `Your goal is to identify the type of modification the user is asking for. There can be "changenetwork", "switchaccount" or "addtoken".`
             },
             {
                 role: "user",

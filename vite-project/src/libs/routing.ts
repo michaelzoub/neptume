@@ -3,7 +3,7 @@ import {
     ChainId,
     SwapOptionsSwapRouter02,
     SwapRoute,
-    SwapType,
+    SwapType, 
   } from '@uniswap/smart-order-router'
   import { TradeType, CurrencyAmount, Percent, Token } from '@uniswap/sdk-core'
   import { CurrentConfig } from '../config'
@@ -54,7 +54,7 @@ import {
   }
   
   export async function executeRoute(
-    route: SwapRoute
+    route: SwapRoute, amountForTransfer: number
   ): Promise<TransactionState> {
     const walletAddress = getWalletAddress()
     const provider = getProvider()
@@ -63,7 +63,7 @@ import {
       throw new Error('Cannot execute a trade without a connected wallet')
     }
   
-    const tokenApproval = await getTokenTransferApproval(CurrentConfig.tokens.in)
+    const tokenApproval = await getTokenTransferApproval(CurrentConfig.tokens.in, amountForTransfer)
   
     // Fail if transfer approvals do not go through
     if (tokenApproval !== TransactionState.Sent) {
@@ -83,7 +83,7 @@ import {
   }
   
   export async function getTokenTransferApproval(
-    token: Token
+    token: Token, amountForTransfer: number
   ): Promise<TransactionState> {
     const provider = getProvider()
     const address = getWalletAddress()
@@ -102,7 +102,7 @@ import {
       const transaction = await tokenContract.populateTransaction.approve(
         V3_SWAP_ROUTER_ADDRESS,
         fromReadableAmount(
-          TOKEN_AMOUNT_TO_APPROVE_FOR_TRANSFER,
+          amountForTransfer,
           token.decimals
         ).toString()
       )

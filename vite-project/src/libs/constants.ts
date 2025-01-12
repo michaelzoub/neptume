@@ -1,6 +1,7 @@
 import { SupportedChainId, Token } from '@uniswap/sdk-core'
 
 // Addresses
+//TO DO: ADD ALL USERS' CONTRACT ADDRESSES HERE:
 
 export const V3_SWAP_ROUTER_ADDRESS =
   '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45'
@@ -61,4 +62,4 @@ export const WETH_ABI = [
 
 export const MAX_FEE_PER_GAS = 100000000000
 export const MAX_PRIORITY_FEE_PER_GAS = 100000000000
-export const TOKEN_AMOUNT_TO_APPROVE_FOR_TRANSFER = 10000
+export let TOKEN_AMOUNT_TO_APPROVE_FOR_TRANSFER = 10000

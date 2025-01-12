@@ -1,4 +1,4 @@
-import { sendSecondMsg, swapCall, sendTransactionValue, sendTransactionAddress } from "../services/openai"
+import { sendSecondMsg, swapCallFrom, swapCallTo, sendTransactionValue, sendTransactionAddress } from "../services/openai"
 import { swap } from "./queries/swap"
 import { modify } from "./queries/modify"
 import { question } from "./queries/question"
@@ -47,15 +47,15 @@ export async function type(aiResponse: string, address: string, originalQuery: s
     }
     
     if (aiResponse == "swap") {
-        //interact with walletsdk
         object.parties.swap = true
-        //to determine the coins the ai needs to swap from and to, we need a smart way to check user's wallet address tx and determine queries
-        const swapStructure = await swapCall(originalQuery)
         //parse : from:, to:
-        const from = [""]
-        const to = [""]
-        //parse (string object to normal object)
-        object.message = await sendSecondMsg(aiResponse, swapStructure)
+        const from = JSON.parse(await swapCallFrom(originalQuery) || "['']")
+        const to = JSON.parse(await swapCallTo(originalQuery) || "['']")
+        const swapStructure = {
+            from: from,
+            to: to
+        }
+        object.message = await sendSecondMsg(aiResponse, JSON.stringify(swapStructure))
         await swap(address, from, to, chainId)
     } else if (aiResponse == "question") {
         console.log("Question hit")
@@ -63,7 +63,7 @@ export async function type(aiResponse: string, address: string, originalQuery: s
         const additionalInfo = await question(originalQuery, address, chainId)
         console.log("Additional info: ", additionalInfo)
 
-        //fetch current price:
+        //TO DO IN FUTURE: classify queries by if they need a price or not, then call it (to save ressources)
         const price = await coingeckoGetPrice()
         console.log("Current price: ", price)
 

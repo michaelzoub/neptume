@@ -9,8 +9,6 @@ export function connectWalletFunc(walleth: any) {
 
     console.log(chainIdGet)
     console.log(addressGet)
-
-    const connectedState = store.get(connected)
     store.set(wallet, walleth)
     store.set(address, addressGet)
     store.set(chainId, chainIdGet)

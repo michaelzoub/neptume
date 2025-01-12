@@ -27,13 +27,6 @@ export async function sendTransaction(chainId: number, destination: string, abi:
       chain: chainId
     }
 
-    const txReqTest = {
-      from: wallet.address,
-      to: '0xd19b72e027cD66bDe41d8f60a13740A26C4be8f3',
-      value: 10,
-      //chainId: chainId
-      //chainId: 137,
-    }
     console.log(destination)
     try {
       const transactionHash = await provider.request({
