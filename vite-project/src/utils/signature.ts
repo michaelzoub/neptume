@@ -1,6 +1,5 @@
 import { getEthereumProvider } from "./getEthereumProvider";
-import { getDefaultStore, useSetAtom } from "jotai";
-import { wallet } from "../atoms/walletinfo";
+import { getDefaultStore } from "jotai";
 
 export async function sign(walletsHook: any) {
 

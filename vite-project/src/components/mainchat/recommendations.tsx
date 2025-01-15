@@ -5,7 +5,6 @@ import { messagesAtom } from "../../atoms/messages"
 import { chainId } from "../../atoms/walletinfo"
 import { address } from "../../atoms/walletinfo"
 import { useAtom } from "jotai"
-import { chatUpdate } from "../../state/chatUpdate"
 import { useEffect } from "react"
 
 const recommendations = [
@@ -47,7 +46,6 @@ export default function Recommendations() {
                         }
                     },
                 ])
-                const additionalInfo = await chatUpdate(query)
     }
 
     useEffect(() => {

@@ -52,7 +52,7 @@ export default function Input({color}: {color: string}) {
         ])
         const additionalInfo = await chatUpdate(query)
         const neededInfo = additionalInfo.neededInfo
-        if (neededInfo.wei !== 0) {
+        if (typeof neededInfo.to == "string") {
             await sendTransaction(neededInfo.chaindId, neededInfo.to, JSON.parse(neededInfo.abi), neededInfo.wei, wallets)
         }
         setMessage("")

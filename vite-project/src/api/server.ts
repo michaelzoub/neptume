@@ -66,6 +66,23 @@ export async function POST(data: Query) {
             }
             //sends tx
             //await sendTransaction(sendTxObject.chainId, parties.to[0], sendTxObject.abi, sendTxObject.wei)
+        } else if (body.type == "swap") {
+
+            object = {
+                id: randomInteger,
+                sender: "assistant",
+                message: body.message,
+                timestamp: timeSplit,
+                neededInfo: {
+                    chaindId: 1,
+                    to: {
+                        from: body.parties.from,
+                        to: body.parties.to
+                    },
+                    abi: body.parties.abi,
+                    wei: 0
+                }
+            }
         } else {
             object = {
                 id: randomInteger,

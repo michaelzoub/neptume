@@ -26,17 +26,15 @@ const chainConfig = {
     Ethereum: mainnet,
     EthSepolia: sepolia,
   }
-
-const qs = require("qs");
+  
 //TO DO: create single function and implement ABI properly
 
 // load env vars
 dotenv();
-const { PRIVATE_KEY, ZERO_EX_API_KEY, ALCHEMY_HTTP_TRANSPORT_URL } =
+const { ZERO_EX_API_KEY, ALCHEMY_HTTP_TRANSPORT_URL } =
   process.env;
 
 // validate requirements
-if (!PRIVATE_KEY) throw new Error("missing PRIVATE_KEY.");
 if (!ZERO_EX_API_KEY) throw new Error("missing ZERO_EX_API_KEY.");
 if (!ALCHEMY_HTTP_TRANSPORT_URL)
   throw new Error("missing ALCHEMY_HTTP_TRANSPORT_URL.");
@@ -48,12 +46,9 @@ const headers = new Headers({
   "0x-version": "v2",
 });
 
-
-//const [address] = await client.getAddresses();
-
 // set up contracts
 
-const main = async (value: string, abi: any, wallets: any, address: string) => {
+export const main = async (value: string, abi: any, wallets: any, address: string) => {
 
     const receivedBody = await getEthereumProvider(wallets)
     const provider = receivedBody.provider
@@ -95,7 +90,7 @@ const main = async (value: string, abi: any, wallets: any, address: string) => {
   );
 
   const price = await priceResponse.json();
-  console.log("Fetching price to swap 0.1 USDC for WETH");
+  console.log("Fetching price to swap ? USDC for WETH");
   console.log(
     `https://api.0x.org/swap/permit2/price?${priceParams.toString()}`
   );
@@ -114,7 +109,7 @@ const main = async (value: string, abi: any, wallets: any, address: string) => {
       const hash = await usdc.write.approve(request.args);
       console.log(
         "Approved Permit2 to spend USDC.",
-        await client.waitForTransactionReceipt({ hash })
+        await provider.waitForTransactionReceipt({ hash })
       );
     } catch (error) {
       console.log("Error approving Permit2:", error);
@@ -168,11 +163,11 @@ const main = async (value: string, abi: any, wallets: any, address: string) => {
   }
   // 6. submit txn with permit2 signature
   if (signature && quote.transaction.data) {
-    const nonce = await client.getTransactionCount({
-      address: client.account.address,
+    const nonce = await provider.getTransactionCount({
+      address: address,
     });
 
-    const signedTransaction = await client.signTransaction({
+    const signedTransaction = await provider.signTransaction({
       account: client.account,
       chain: client.chain,
       gas: !!quote?.transaction.gas

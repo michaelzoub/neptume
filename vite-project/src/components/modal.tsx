@@ -2,13 +2,12 @@ import { chains } from "../data/chains"
 import { chainId, connected } from "../atoms/walletinfo"
 import { useAtom } from "jotai"
 import { modal } from "../atoms/modal"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect } from "react"
 import { motion } from "framer-motion"
 import { useWallets } from "@privy-io/react-auth"
 
 export default function Modal({color}: {color: string}) {
 
-    const memoizedChains = useMemo(() => chains, [chains])
 
     const {wallets} = useWallets();
     const wallet = wallets[0]; // Replace this with your desired wallet

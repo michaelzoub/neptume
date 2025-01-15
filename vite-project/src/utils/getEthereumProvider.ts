@@ -1,6 +1,3 @@
-import { getDefaultStore } from "jotai";
-import { wallet } from "../atoms/walletinfo";
-
 export async function getEthereumProvider(walletsHook: any) {
     if (walletsHook == "") {
         const insideWallet = localStorage.getItem("wallet")

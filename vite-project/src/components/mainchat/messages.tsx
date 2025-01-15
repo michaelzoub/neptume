@@ -1,11 +1,8 @@
 import { useAtom } from "jotai"
 import { messageAtom, messagesAtom } from "../../atoms/messages"
 import { useEffect, useState, useRef } from "react"
-import { atom } from "jotai"
 import { Message } from "../../interfaces/Message"
 import { motion } from "framer-motion"
-
-const messageRefAtom = atom<React.RefObject<HTMLDivElement> | null>(null)
 
 const timeSplit = new Date().toLocaleTimeString().split(":")[0] + ":" + new Date().toLocaleTimeString().split(":")[1]
 
@@ -31,14 +28,11 @@ export default function Messages({color, secondary}: {color: string, secondary: 
     const messageRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        //set messages to initial messages
         setMessages(messagesInitial)
-        //scroll downwards
         const curr = messageRef.current
         if (curr) {
             curr.scrollTop = curr.scrollHeight
         }
-        //fetch messages from database
     }, [])
 
     useEffect(() => {

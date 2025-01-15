@@ -1,4 +1,4 @@
-import {useConnectWallet, usePrivy} from '@privy-io/react-auth';
+import {useConnectWallet} from '@privy-io/react-auth';
 import {useLogin} from '@privy-io/react-auth';
 import { useAtom, atom } from 'jotai';
 import { connected } from '../../atoms/walletinfo';
@@ -8,18 +8,15 @@ import { connectWalletFunc } from '../../state/connectWalletFunc';
 import { modal } from '../../atoms/modal';
 import { useWallets } from "@privy-io/react-auth";
 import { sign } from '../../utils/signature';
-import { wallet } from '../../atoms/walletinfo';
 
 export default function ConnectWalletButton({color}: {color: string}) {
 
   const {wallets} = useWallets();
-    const { logout } = usePrivy()
     const [isHovered, setIsHovered] = useState(false)
     const [modals, setModal] = useAtom(modal)
     const [connect, setConnect] = useAtom(connected)
     const [signing, setSigning] = useState(false)
 
-    const [walletAtom, setWalletAtom] = useAtom(wallet)
 
     const {connectWallet} = useConnectWallet({
         onSuccess: (wallet) => {

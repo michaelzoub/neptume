@@ -4,12 +4,10 @@ import { motion } from "framer-motion"
 import { openState, rotateState, scaleState, translateState } from "../../atoms/opensign"
 
 export default function OpenSign({color}: {color: string}) {
-    const [open, setOpen] = useAtom(openState)
+    const [, setOpen] = useAtom(openState)
     const [rotate, setRotate] = useAtom(rotateState)
     const [scale, setScale] = useAtom(scaleState)
     const [translate, setTranslate] = useAtom(translateState)
-
-    console.log(open)
 
     function handleClick() {
         setRotate(true)

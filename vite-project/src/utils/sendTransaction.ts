@@ -1,7 +1,6 @@
 import {encodeFunctionData} from 'viem';
 import { getEthereumProvider } from './getEthereumProvider';
 
-//i need contract address and 
 export async function sendTransaction(chainId: number, destination: string, abi: any, value: number, walletsProvided: any) {
 
   console.log(walletsProvided)

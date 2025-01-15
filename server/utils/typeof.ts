@@ -12,7 +12,8 @@ const parties = {
     swap: false,
     from: [""],
     to: [""],
-    amount: 0
+    amount: 0,
+    abi:  null
 }
 
 const object = {
@@ -55,8 +56,14 @@ export async function type(aiResponse: string, address: string, originalQuery: s
             from: from,
             to: to
         }
+        const price = await coingeckoGetPrice()
+        const value = await sendTransactionValue(originalQuery, price)
+        const wei = Number(value) * 1000000000000000000
         object.message = await sendSecondMsg(aiResponse, JSON.stringify(swapStructure))
-        await swap(address, from, to, chainId)
+        const abi = await swap(address, from, to, chainId)
+        object.parties.abi = abi
+        object.parties.from = swapStructure.from
+        object.parties.to = swapStructure.to
     } else if (aiResponse == "question") {
         console.log("Question hit")
         //interact with chain (add wallet address to function)
