@@ -67,11 +67,10 @@ export async function POST(data: Query) {
             //sends tx
             //await sendTransaction(sendTxObject.chainId, parties.to[0], sendTxObject.abi, sendTxObject.wei)
         } else if (body.type == "swap") {
-
             object = {
                 id: randomInteger,
                 sender: "assistant",
-                message: body.message,
+                message: "Swapping...",
                 timestamp: timeSplit,
                 neededInfo: {
                     chaindId: 1,
@@ -80,7 +79,7 @@ export async function POST(data: Query) {
                         to: body.parties.to
                     },
                     abi: body.parties.abi,
-                    wei: 0
+                    wei: body.parties.amount
                 }
             }
         } else {

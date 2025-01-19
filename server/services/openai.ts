@@ -64,7 +64,7 @@ export async function swapCallFrom(message: string) {
         messages: [
             {
                 role: "system",
-                content: `Find the tokens user wants to swap from (contract address) and format is as an array of strings. Respond in the format: "["0x283450345", "0x48503458"]" or "No tokens found."`
+                content: `Find the tokens user wants to swap from (contract address OR name (e.g: USDC, ETH, WETH and so on...)) and format is as an array of strings. Respond in the format: "["0x283450345", "0x48503458"] or ["usdc", "op]" or "No tokens found."`
             },
             {
                 role: "user",
@@ -82,7 +82,7 @@ export async function swapCallTo(message: string) {
         messages: [
             {
                 role: "system",
-                content: `Find the tokens user wants to swap to (contract address) and format is as an array of strings. Respond in the format: "["0x283450345"]" or "No tokens found."`
+                content: `Find the tokens user wants to swap to (contract address OR name) and format is as an array of strings. Respond in the format: "["0x283450345"] or ["usdc", "op"]" or "No tokens found."`
             },
             {
                 role: "user",

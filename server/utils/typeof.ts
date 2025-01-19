@@ -60,8 +60,9 @@ export async function type(aiResponse: string, address: string, originalQuery: s
         const value = await sendTransactionValue(originalQuery, price)
         const wei = Number(value) * 1000000000000000000
         object.message = await sendSecondMsg(aiResponse, JSON.stringify(swapStructure))
-        const abi = await swap(address, from, to, chainId)
+        const abi: any = await swap(address, from, to, chainId)
         object.parties.abi = abi
+        object.parties.amount = wei
         object.parties.from = swapStructure.from
         object.parties.to = swapStructure.to
     } else if (aiResponse == "question") {

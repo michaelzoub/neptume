@@ -8,6 +8,8 @@ import { chatUpdate } from "../../state/chatUpdate"
 import { address, chainId } from "../../atoms/walletinfo"
 import { useWallets } from "@privy-io/react-auth"
 import { sendTransaction } from "../../utils/sendTransaction"
+import { swapSushi } from "../../libs/sushiswap"
+import { To } from "../../interfaces/Message"
 
 export default function Input({color}: {color: string}) {
 
@@ -50,10 +52,13 @@ export default function Input({color}: {color: string}) {
                 }
             },
         ])
+        //TO DO: perfom swap and transaction logic here for now, organize this once performance is critical
         const additionalInfo = await chatUpdate(query)
         const neededInfo = additionalInfo.neededInfo
-        if (typeof neededInfo.to == "string") {
+        if (additionalInfo.message == "Sending transaction..." && typeof neededInfo.to == "string") {
             await sendTransaction(neededInfo.chaindId, neededInfo.to, JSON.parse(neededInfo.abi), neededInfo.wei, wallets)
+        } else if (additionalInfo.message == "Swapping...") {
+            await swapSushi(neededInfo.wei.toString(), neededInfo.abi, wallets, addresss, "", chainIdd , neededInfo.to)
         }
         setMessage("")
         setTimeout(() => {

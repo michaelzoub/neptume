@@ -1,4 +1,5 @@
 import { config as dotenv } from "dotenv"
+import { getTokenHolding } from "../getTokenHolding"
 dotenv()
 const { ETHERSCAN_API } = process.env
 
@@ -10,11 +11,27 @@ const returnObject = {
 async function fetchAbi(address: string) {
     const response = await fetch(`https://api.etherscan.io/api?module=contract&action=getabi&address=${address}&apikey=${ETHERSCAN_API}`)
         const body = await response.json()
-        return body
+        return body.result
 }
 
 async function returnOneAbiInArray(tokensArray: string[]) {
     return await fetchAbi(tokensArray[0])
+}
+
+async function changeNameToAddress(sellTokens: Array<string>, buyTokens: Array<string>, address: string) {
+    const tokenHoldings = await getTokenHolding(address)
+    const sellArray = sellTokens.flatMap((name) => {
+        return tokenHoldings.filter((e) => e.symbol.toLowerCase() === name.toLowerCase())
+        .map((e) => e.token_address)
+    })
+    const buyArray = buyTokens.flatMap((name) => {
+        return tokenHoldings.filter((e) => e.symbol.toLowerCase() === name.toLowerCase())
+        .map((e) => e.token_address)
+    })
+    return {
+        sellArray: sellArray,
+        buyArray: buyArray
+    }
 }
 
 export async function swap(address: string, sellTokens: Array<string>, buyTokens: Array<string>, chainId: number) {
@@ -22,6 +39,14 @@ export async function swap(address: string, sellTokens: Array<string>, buyTokens
     //test calling optimism for now
     //await swap0x(address, sellTokens, buyTokens, chainId, "")
     //afterwards send back to front end 
+    const checkIfAddress: boolean = sellTokens.includes("0x") && buyTokens.includes("0x")
+    !checkIfAddress ? await getTokenHolding(address) : console.log("Not contract address")
+    //call function to cross check sellTokens and buyTokens with tokenHoldings 
+    if (!checkIfAddress) {
+        const newTokenObject = await changeNameToAddress(sellTokens, buyTokens, address)
+        sellTokens = newTokenObject.sellArray
+        buyTokens = newTokenObject.buyArray
+    }
     if (buyTokens.length > 1 && sellTokens.length > 1) {
         //call uniswap and send info to frontend to interact with provider
         const abiBuyArray = []

@@ -1,4 +1,4 @@
-interface To {
+export interface To {
     from: string,
     to: string
 }

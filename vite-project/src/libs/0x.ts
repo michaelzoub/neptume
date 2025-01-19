@@ -1,4 +1,3 @@
-import { config as dotenv } from "dotenv";
 import {
   createWalletClient,
   http,
@@ -13,9 +12,9 @@ import {
   size,
 } from "viem";
 import type { Hex } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
 import { getEthereumProvider } from "../utils/getEthereumProvider";
 import { mainnet, sepolia, arbitrum, avalanche, base, optimism, polygon, worldchain } from 'viem/chains';
+import { Chain } from "viem";
 const chainConfig = {
     Arbitrum: arbitrum,
     Avalanche: avalanche,
@@ -26,18 +25,14 @@ const chainConfig = {
     Ethereum: mainnet,
     EthSepolia: sepolia,
   }
+  import { To } from "../interfaces/Message";
   
 //TO DO: create single function and implement ABI properly
 
 // load env vars
-dotenv();
-const { ZERO_EX_API_KEY, ALCHEMY_HTTP_TRANSPORT_URL } =
-  process.env;
+const ZERO_EX_API_KEY = import.meta.env.ZERO_EX_API_KEY;       // Vite
+const ALCHEMY_HTTP_TRANSPORT_URL = import.meta.env.VITE_ALCHEMY_HTTP_TRANSPORT_URL;
 
-// validate requirements
-if (!ZERO_EX_API_KEY) throw new Error("missing ZERO_EX_API_KEY.");
-if (!ALCHEMY_HTTP_TRANSPORT_URL)
-  throw new Error("missing ALCHEMY_HTTP_TRANSPORT_URL.");
 
 // fetch headers
 const headers = new Headers({
@@ -48,24 +43,24 @@ const headers = new Headers({
 
 // set up contracts
 
-export const main = async (value: string, abi: any, wallets: any, address: string) => {
+export const main = async (value: string, abi: any, wallets: any, address: string, chainName: string, chainId:number, parties: any) => {
 
     const receivedBody = await getEthereumProvider(wallets)
     const provider = receivedBody.provider
 
     //setup wallet client
     const client = createWalletClient({
-        chain: sepolia,
+        chain: sepolia, //temporary chain
         transport: custom(provider),
       })
 
     const usdc = getContract({
-        address: "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+        address: parties.from[0],
         abi: erc20Abi,
         client,
       });
       const weth = getContract({
-        address: "0x4200000000000000000000000000000000000006",
+        address: parties.to[0],
         abi: abi,
         client,
       });
@@ -104,9 +99,13 @@ export const main = async (value: string, abi: any, wallets: any, address: strin
         price.issues.allowance.spender,
         maxUint256,
       ]);
-      console.log("Approving Permit2 to spend USDC...", request);
+      console.log("For debugging purpoes, logging request object", + request)
+      console.log("Approving Permit2 to spend USDC...", request.args);
+      //TO DO: Debug here: verify what request.args outputs, usdc.write.approve expects 2 arguments (chain + data type with account, gas etc) - CONVERT CURRENT CHAIN TO viem's Chain type
       // set approval
-      const hash = await usdc.write.approve(request.args);
+// Call approve with correct arguments
+const chainTuple: readonly [`0x${string}`, bigint] = [chainId.toString(), BigInt(0)]
+const hash = await usdc.write.approve(chainTuple, request.args)
       console.log(
         "Approved Permit2 to spend USDC.",
         await provider.waitForTransactionReceipt({ hash })
