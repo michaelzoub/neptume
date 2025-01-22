@@ -77,7 +77,7 @@ export async function swap(address: string, sellTokens: Array<string>, buyTokens
         returnObject.buyArrayAbi = await returnOneAbiInArray(buyTokens)
         return returnObject
     } else {
-        
+        //only one address on both sides
         return returnObject
     }
 }

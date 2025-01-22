@@ -60,8 +60,8 @@ export default function Messages({color, secondary}: {color: string, secondary: 
                     >
                         <div className={`text-neutral-200 shadow-lg ${
                             message.sender === "user" 
-                                ? ` border-[1px] border-${secondary} self-end text-left`
-                                : `text-left bg-neutral-500 border-[1px] border-neutral-600`
+                                ? ` border-[1px] border-${secondary} self-end text-left text-black`
+                                : `text-left bg-neutral-700 border-[1px] border-neutral-600`
                         } break-words rounded-xl p-2 flex flex-col w-fit max-w-full h-fit`}
                         style={{
                             backgroundColor: (message.sender === "user" ? `${color}` : ""), 

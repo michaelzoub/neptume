@@ -40,10 +40,12 @@ export function getWalletAddress(): string | null {
 }
 
 export async function sendTransaction(
-  transaction: ethers.providers.TransactionRequest
+  transaction: ethers.providers.TransactionRequest,
+  provider: any
 ): Promise<TransactionState> {
+
   if (CurrentConfig.env === Environment.WALLET_EXTENSION) {
-    return sendTransactionViaExtension(transaction)
+    return sendTransactionViaExtension(transaction, provider)
   } else {
     return sendTransactionViaWallet(transaction)
   }
@@ -87,10 +89,11 @@ function createBrowserExtensionProvider(): ethers.providers.Web3Provider | null 
 
 // Transacting with a wallet extension via a Web3 Provider
 async function sendTransactionViaExtension(
-  transaction: ethers.providers.TransactionRequest
+  transaction: ethers.providers.TransactionRequest,
+  provider: any
 ): Promise<TransactionState> {
   try {
-    const receipt = await browserExtensionProvider?.send(
+    const receipt = await provider.sendTransaction(
       'eth_sendTransaction',
       [transaction]
     )

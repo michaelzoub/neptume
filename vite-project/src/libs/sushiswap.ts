@@ -1,9 +1,5 @@
 import { getSwap, ChainId } from 'sushi'
-import { createPublicClient
-
-
-
-, createWalletClient, http, type Hex, custom } from 'viem'
+import { createPublicClient, createWalletClient, http, type Hex, custom } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { mainnet } from 'viem/chains'
 import { getEthereumProvider } from '../utils/getEthereumProvider'
@@ -42,21 +38,18 @@ export async function swapSushi(value: string, abi: any, wallets: any, address: 
         })
         // Returns the simulated amount out
         console.log('Output: ', callResult)
-        const PRIVATE_KEY = process.env.PRIVATE_KEY as Hex
+        //const PRIVATE_KEY = process.env.PRIVATE_KEY as Hex
         // Send a transaction
-        const signedTx  = await provider.signTransaction(tx, {
-            value: tx.value,
+        const signer = provider.getSigner();
+
+        // Send the transaction using the signer
+        const txResponse = await signer.sendTransaction({
             to: tx.to,
+            value: tx.value,
             data: tx.data,
-          });
-          const hash = await provider.sendTransaction({
-            account: PRIVATE_KEY,
-            data: signedTx.data,
-            to: signedTx.to,
-            value: signedTx.value,
-          })
+        });
   
           // After signing, send the transact
-        console.log('Tx: ', hash)
+        console.log('Tx: ', txResponse)
       }
 }

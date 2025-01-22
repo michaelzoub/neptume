@@ -54,7 +54,7 @@ export default function AddressContexts({state}: {state: boolean}) {
                 <button className="text-neutral-500 bg-neutral-300 px-[7px] py-0 rounded-lg border-[1px] border-neutral-100 flex-grow" onClick={handleButtonClick}><ArrowRight className="w-[12px] h-[12px]" /></button>
             </div>
             <motion.div className="w-full flex flex-col gap-2 text-xs text-neutral-500 mt-4 px-1 h-[198px] overflow-y-auto scrollbar-hide">
-            <h2 className="mt-2">Your current name list:</h2>
+            <h2 className="mt-1">Your current name list:</h2>
             {contexts?.map((e, index) => (
                 <div key={index} className="w-full flex flex-row gap-1">
                     <div className="flex w-[30%] items-center pl-1 rounded-lg hover:bg-neutral-700 p-[3px]">

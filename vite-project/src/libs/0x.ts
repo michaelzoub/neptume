@@ -104,8 +104,17 @@ export const main = async (value: string, abi: any, wallets: any, address: strin
       //TO DO: Debug here: verify what request.args outputs, usdc.write.approve expects 2 arguments (chain + data type with account, gas etc) - CONVERT CURRENT CHAIN TO viem's Chain type
       // set approval
 // Call approve with correct arguments
-const chainTuple: readonly [`0x${string}`, bigint] = [chainId.toString(), BigInt(0)]
-const hash = await usdc.write.approve(chainTuple, request.args)
+const chainApprove: Chain | undefined = chainConfig.EthSepolia
+const chainTuple: readonly [`0x${string}`, bigint] = [`0x${chainId.toString(16)}`, BigInt(0)]
+const approvalArgs = {
+  account: address.startsWith("0x") ? address : `0x${address}` as `0x${string}`, // Ensure address is in the correct format
+  chain: [`0x${chainId.toString(16)}`, BigInt(chainId)] as readonly [`0x${string}`, bigint], // Correctly format chain
+  gas: BigInt(100000),  // optional, adjust based on your transaction needs
+  nonce: await provider.getTransactionCount({ address }), // optional, get nonce if needed
+  value: BigInt(0),  // if no value is sent with the transaction
+};
+
+const hash = await usdc.write.approve(approvalArgs.chain, approvalArgs)
       console.log(
         "Approved Permit2 to spend USDC.",
         await provider.waitForTransactionReceipt({ hash })

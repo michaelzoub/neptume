@@ -8,8 +8,8 @@ import { chatUpdate } from "../../state/chatUpdate"
 import { address, chainId } from "../../atoms/walletinfo"
 import { useWallets } from "@privy-io/react-auth"
 import { sendTransaction } from "../../utils/sendTransaction"
-import { swapSushi } from "../../libs/sushiswap"
 import { To } from "../../interfaces/Message"
+import { performSwap } from "../../libs/uniswaptest"
 
 export default function Input({color}: {color: string}) {
 
@@ -57,8 +57,11 @@ export default function Input({color}: {color: string}) {
         const neededInfo = additionalInfo.neededInfo
         if (additionalInfo.message == "Sending transaction..." && typeof neededInfo.to == "string") {
             await sendTransaction(neededInfo.chaindId, neededInfo.to, JSON.parse(neededInfo.abi), neededInfo.wei, wallets)
-        } else if (additionalInfo.message == "Swapping...") {
-            await swapSushi(neededInfo.wei.toString(), neededInfo.abi, wallets, addresss, "", chainIdd , neededInfo.to)
+        } else if (additionalInfo.message == "Swapping..." && typeof neededInfo.to !== "string") {
+            console.log("Needed info: " + + JSON.stringify(neededInfo, null, 2))
+            //await performSwap('0x61fFE014bA17989E743c5F6cB21bF9697530B21e', '0xE592427A0AEce92De3Edee1F18E0157C05861564', neededInfo.wei, wallets, neededInfo.to.from[0], neededInfo.to.to[0])
+            console.log(wallets)
+            await performSwap('0x61fFE014bA17989E743c5F6cB21bF9697530B21e', '0xE592427A0AEce92De3Edee1F18E0157C05861564', 1000, wallets, "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0x767fe9edc9e0df98e07454847909b5e959d7ca0e")
         }
         setMessage("")
         setTimeout(() => {

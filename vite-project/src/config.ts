@@ -1,11 +1,13 @@
 import { Token } from '@uniswap/sdk-core'
-import { WETH_TOKEN, USDC_TOKEN } from './libs/constants'
+import { FeeAmount } from '@uniswap/v3-sdk'
+
+import { USDC_TOKEN, WETH_TOKEN } from './libs/constants'
 
 // Sets if the example should run locally or on chain
 export enum Environment {
   LOCAL,
-  WALLET_EXTENSION,
   MAINNET,
+  WALLET_EXTENSION,
 }
 
 // Inputs that configure this example to run
@@ -23,6 +25,7 @@ export interface ExampleConfig {
     in: Token
     amountIn: number
     out: Token
+    poolFee: number
   }
 }
 
@@ -43,5 +46,6 @@ export const CurrentConfig: ExampleConfig = {
     in: WETH_TOKEN,
     amountIn: 1,
     out: USDC_TOKEN,
+    poolFee: FeeAmount.MEDIUM,
   },
 }

@@ -18,7 +18,6 @@ import {
     MAX_FEE_PER_GAS,
     MAX_PRIORITY_FEE_PER_GAS,
     ERC20_ABI,
-    TOKEN_AMOUNT_TO_APPROVE_FOR_TRANSFER,
     V3_SWAP_ROUTER_ADDRESS,
   } from './constants'
   import { fromReadableAmount } from './conversion'
@@ -77,7 +76,7 @@ import {
       from: walletAddress,
       maxFeePerGas: MAX_FEE_PER_GAS,
       maxPriorityFeePerGas: MAX_PRIORITY_FEE_PER_GAS,
-    })
+    }, provider)
   
     return res
   }
@@ -110,7 +109,7 @@ import {
       return sendTransaction({
         ...transaction,
         from: address,
-      })
+      }, provider)
     } catch (e) {
       console.error(e)
       return TransactionState.Failed
