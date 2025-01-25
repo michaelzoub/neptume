@@ -26,7 +26,7 @@ export default function AddressContexts({state}: {state: boolean}) {
     return (
         <AnimatePresence mode="wait">
             {state && (
-        <motion.div className={` ${state ? "absolute mt-[345px] w-[250px] h-[300px] max-h-[300px] border-[1px] bg-neutral-800 border-neutral-700 rounded-lg p-2 gap-1 text-white py-4" : "hidden"}`}
+        <motion.div className={` ${state ? "absolute top-[100%] mt-1 w-[250px] h-[300px] max-h-[300px] border-[1px] bg-neutral-800 border-neutral-700 rounded-lg p-2 gap-1 text-white py-4" : "hidden"}`}
             initial={{
                 scale: 0,
                 translateY: -200,

@@ -63,8 +63,13 @@ export async function type(aiResponse: string, address: string, originalQuery: s
         const abi: any = await swap(address, from, to, chainId)
         object.parties.abi = abi
         object.parties.amount = wei
-        object.parties.from = swapStructure.from
-        object.parties.to = swapStructure.to
+        if (abi.from[0] !== "") {
+            object.parties.from = abi.from
+            object.parties.to = abi.to
+        } else {
+            object.parties.from = swapStructure.from
+            object.parties.to = swapStructure.to
+        }
     } else if (aiResponse == "question") {
         console.log("Question hit")
         //interact with chain (add wallet address to function)

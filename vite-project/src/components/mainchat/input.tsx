@@ -9,7 +9,7 @@ import { address, chainId } from "../../atoms/walletinfo"
 import { useWallets } from "@privy-io/react-auth"
 import { sendTransaction } from "../../utils/sendTransaction"
 import { To } from "../../interfaces/Message"
-import { performSwap } from "../../libs/uniswaptest"
+import { ethersSwap } from "../../libs/ethers"
 
 export default function Input({color}: {color: string}) {
 
@@ -61,7 +61,9 @@ export default function Input({color}: {color: string}) {
             console.log("Needed info: " + + JSON.stringify(neededInfo, null, 2))
             //await performSwap('0x61fFE014bA17989E743c5F6cB21bF9697530B21e', '0xE592427A0AEce92De3Edee1F18E0157C05861564', neededInfo.wei, wallets, neededInfo.to.from[0], neededInfo.to.to[0])
             console.log(wallets)
-            await performSwap('0x61fFE014bA17989E743c5F6cB21bF9697530B21e', '0xE592427A0AEce92De3Edee1F18E0157C05861564', 1000, wallets, "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0x767fe9edc9e0df98e07454847909b5e959d7ca0e")
+            //await performSwap('0x61fFE014bA17989E743c5F6cB21bF9697530B21e', '0xE592427A0AEce92De3Edee1F18E0157C05861564', 1000, wallets, "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0x767fe9edc9e0df98e07454847909b5e959d7ca0e")
+            //await performSwap("1000", wallets, "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0x767fe9edc9e0df98e07454847909b5e959d7ca0e", chainIdd)
+            await ethersSwap(neededInfo.wei.toString(), wallets, neededInfo.to.from[0], neededInfo.to.to[0], chainIdd)
         }
         setMessage("")
         setTimeout(() => {

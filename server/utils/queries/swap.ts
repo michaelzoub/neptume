@@ -5,7 +5,9 @@ const { ETHERSCAN_API } = process.env
 
 const returnObject = {
     buyArrayAbi: [""],
-    sellArrayAbi: [""]
+    sellArrayAbi: [""],
+    from: [""],
+    to: [""]
 }
 
 async function fetchAbi(address: string) {
@@ -21,11 +23,11 @@ async function returnOneAbiInArray(tokensArray: string[]) {
 async function changeNameToAddress(sellTokens: Array<string>, buyTokens: Array<string>, address: string) {
     const tokenHoldings = await getTokenHolding(address)
     const sellArray = sellTokens.flatMap((name) => {
-        return tokenHoldings.filter((e) => e.symbol.toLowerCase() === name.toLowerCase())
+        return tokenHoldings.filter((e) => (e.symbol.toLowerCase() || e.name.toLowerCase()) === name.toLowerCase())
         .map((e) => e.token_address)
     })
     const buyArray = buyTokens.flatMap((name) => {
-        return tokenHoldings.filter((e) => e.symbol.toLowerCase() === name.toLowerCase())
+        return tokenHoldings.filter((e) => (e.symbol.toLowerCase() || e.name.toLowerCase()) === name.toLowerCase())
         .map((e) => e.token_address)
     })
     return {
@@ -46,6 +48,8 @@ export async function swap(address: string, sellTokens: Array<string>, buyTokens
         const newTokenObject = await changeNameToAddress(sellTokens, buyTokens, address)
         sellTokens = newTokenObject.sellArray
         buyTokens = newTokenObject.buyArray
+        returnObject.from = sellTokens
+        returnObject.to = buyTokens
     }
     if (buyTokens.length > 1 && sellTokens.length > 1) {
         //call uniswap and send info to frontend to interact with provider
