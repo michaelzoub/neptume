@@ -58,11 +58,16 @@ export async function type(aiResponse: string, address: string, originalQuery: s
         }
         const price = await coingeckoGetPrice()
         const value = await sendTransactionValue(originalQuery, price)
+        console.log("Received from OpenAI call, here is the value: ", value)
         const wei = Number(value) * 1000000000000000000
         object.message = await sendSecondMsg(aiResponse, JSON.stringify(swapStructure))
         const abi: any = await swap(address, from, to, chainId)
         object.parties.abi = abi
-        object.parties.amount = wei
+        if (!wei) {
+            object.parties.amount = 1
+        } else {
+            object.parties.amount = wei
+        }
         if (abi.from[0] !== "") {
             object.parties.from = abi.from
             object.parties.to = abi.to

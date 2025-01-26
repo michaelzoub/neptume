@@ -9,17 +9,6 @@ const returnObject = {
     from: [""],
     to: [""]
 }
-
-async function fetchAbi(address: string) {
-    const response = await fetch(`https://api.etherscan.io/api?module=contract&action=getabi&address=${address}&apikey=${ETHERSCAN_API}`)
-        const body = await response.json()
-        return body.result
-}
-
-async function returnOneAbiInArray(tokensArray: string[]) {
-    return await fetchAbi(tokensArray[0])
-}
-
 async function changeNameToAddress(sellTokens: Array<string>, buyTokens: Array<string>, address: string) {
     const tokenHoldings = await getTokenHolding(address)
     const sellArray = sellTokens.flatMap((name) => {
@@ -53,32 +42,19 @@ export async function swap(address: string, sellTokens: Array<string>, buyTokens
     }
     if (buyTokens.length > 1 && sellTokens.length > 1) {
         //call uniswap and send info to frontend to interact with provider
-        const abiBuyArray = []
-        const abiSellArray = []
+
         for (const token of buyTokens) {
-            abiBuyArray.push(await fetchAbi(token))
         }
         for (const token of sellTokens) {
-            abiSellArray.push(await fetchAbi(token))
         }    
-        returnObject.buyArrayAbi = abiBuyArray
-        returnObject.sellArrayAbi = abiSellArray
         return returnObject
     } else if (buyTokens.length > 1) {
-        const abiBuyArray = []
         for (const token of buyTokens) {
-            abiBuyArray.push(await fetchAbi(token))
         }
-        returnObject.buyArrayAbi = abiBuyArray
-        returnObject.sellArrayAbi = await returnOneAbiInArray(sellTokens)
         return returnObject
     } else if (sellTokens.length > 1) {
-        const abiSellArray = []
         for (const token of sellTokens) {
-            abiSellArray.push(await fetchAbi(token))
         }    
-        returnObject.sellArrayAbi = abiSellArray
-        returnObject.buyArrayAbi = await returnOneAbiInArray(buyTokens)
         return returnObject
     } else {
         //only one address on both sides

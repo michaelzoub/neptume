@@ -2,10 +2,16 @@ import OpenAI from "openai";
 import { config as dotenv } from "dotenv"
 dotenv()
 const { NEXT_PUBLIC_OPENAI_API } = process.env
+const { DEEPSEEK_API_KEY } = process.env
 
 const openai = new OpenAI({
     apiKey: NEXT_PUBLIC_OPENAI_API,
     dangerouslyAllowBrowser: true
+});
+
+const deepseek = new OpenAI({
+    baseURL: 'https://api.deepseek.com',
+    apiKey: DEEPSEEK_API_KEY
 });
 
 export async function sendInitMsg(message: string, contextInfo: string) {
@@ -59,40 +65,56 @@ export async function sendSecondMsg(message: string, additionalInfo: string) {
     return res?.choices[0].message.content || "";
 }
 
+// Updated swapCallFrom prompt
 export async function swapCallFrom(message: string) {
-    const res = await openai.chat.completions.create({
+    const res = await deepseek.chat.completions.create({
         messages: [
             {
                 role: "system",
-                content: `Find the tokens user wants to swap from (contract address OR name (e.g: USDC, ETH, WETH and so on...)) and format is as an array of strings. Respond in the format: "["0x283450345", "0x48503458"] or ["usdc", "op]" or "No tokens found."`
+                content: `STRICT FORMATTING: Identify tokens to swap FROM (contract address OR symbol). 
+                Respond ONLY as: ["0x...","symbol"] or ["eth"] or ["No tokens found"]. 
+                Example valid responses: 
+                - ["eth"] 
+                - ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "op"] 
+                - ["No tokens found"]`
             },
-            {
-                role: "user",
-                content: message
-            }
+            { role: "user", content: message }
         ],
-        model: "gpt-4o-mini-2024-07-18",
+        model: "deepseek-chat",
+        temperature: 0.1,  // Add slight temperature for better accuracy
         max_tokens: 65
     });
-    return res?.choices[0].message.content || "";
+    return res?.choices[0].message.content || "[]";
 }
 
+// swapCallTo.ts
 export async function swapCallTo(message: string) {
-    const res = await openai.chat.completions.create({
+    const res = await deepseek.chat.completions.create({
         messages: [
             {
                 role: "system",
-                content: `Find the tokens user wants to swap to (contract address OR name) and format is as an array of strings. Respond in the format: "["0x283450345"] or ["usdc", "op"]" or "No tokens found."`
+                content: `EXCLUSIVE RESPONSE FORMAT: ["to_token"]
+                - Token must be contract address (0x...) or symbol (USDC)
+                - Example valid responses:
+                  ["0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]
+                  ["USDC"]
+                  ["eth"]
+                - Invalid responses will break the system
+                - Query: "${message}"`
             },
             {
                 role: "user",
-                content: message
+                content: "ONLY respond with the JSON array. NO OTHER TEXT."
             }
         ],
-        model: "gpt-4o-mini-2024-07-18",
-        max_tokens: 65
+        model: "deepseek-chat",
+        temperature: 0,
+        max_tokens: 25
     });
-    return res?.choices[0].message.content || "";
+
+    const raw = res?.choices[0].message.content || "";
+    console.log("Raw swapCallTo response:", raw); // Debug logging
+    return raw;
 }
 
 export async function questionCall(message: string) {
