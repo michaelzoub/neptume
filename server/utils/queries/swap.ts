@@ -1,5 +1,6 @@
 import { config as dotenv } from "dotenv"
 import { getTokenHolding } from "../getTokenHolding"
+import { commonContractAddresses } from "../../data/commonContractAdresses"
 dotenv()
 const { ETHERSCAN_API } = process.env
 
@@ -9,16 +10,27 @@ const returnObject = {
     from: [""],
     to: [""]
 }
+
 async function changeNameToAddress(sellTokens: Array<string>, buyTokens: Array<string>, address: string) {
     const tokenHoldings = await getTokenHolding(address)
-    const sellArray = sellTokens.flatMap((name) => {
+    let sellArray = sellTokens.flatMap((name) => {
         return tokenHoldings.filter((e) => (e.symbol.toLowerCase() || e.name.toLowerCase()) === name.toLowerCase())
         .map((e) => e.token_address)
     })
-    const buyArray = buyTokens.flatMap((name) => {
+    let buyArray = buyTokens.flatMap((name) => {
         return tokenHoldings.filter((e) => (e.symbol.toLowerCase() || e.name.toLowerCase()) === name.toLowerCase())
         .map((e) => e.token_address)
     })
+    //verify if one of the addresses wasn't changed:
+    if (buyArray.some((e) => !e.startsWith("0x"))) {
+        sellArray = buyArray.flatMap((name) => {
+            return commonContractAddresses.filter((e) => (e.symbol.toLowerCase() || e.name.toLowerCase()) === name.toLowerCase())
+        })
+    } if (sellArray.some((e) => !e.startsWith("0x"))) {
+        buyArray = sellArray.flatMap((name) => {
+            return commonContractAddresses.filter((e) => (e.symbol.toLowerCase() || e.name.toLowerCase()) === name.toLowerCase())
+        })
+    }
     return {
         sellArray: sellArray,
         buyArray: buyArray

@@ -63,7 +63,7 @@ export default function Input({color}: {color: string}) {
             console.log(wallets)
             //await performSwap('0x61fFE014bA17989E743c5F6cB21bF9697530B21e', '0xE592427A0AEce92De3Edee1F18E0157C05861564', 1000, wallets, "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0x767fe9edc9e0df98e07454847909b5e959d7ca0e")
             //await performSwap("1000", wallets, "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0x767fe9edc9e0df98e07454847909b5e959d7ca0e", chainIdd)
-            await ethersSwap(neededInfo.wei.toString(), wallets, neededInfo.to.from[0], neededInfo.to.to[0], chainIdd)
+            await ethersSwap(neededInfo.wei.toString(), wallets, "0xD76b5c2A23ef78368d8E34288B5b65D616B746aE", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", chainIdd)
         }
         setMessage("")
         setTimeout(() => {
