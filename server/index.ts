@@ -1,6 +1,11 @@
 import { sendInitMsg } from "./services/openai"
 import { type } from "./utils/typeof"
 import { checkDB } from "./utils/db"
+import Stripe from 'stripe';
+
+const stripe = new Stripe('sk_test_51Q2bQIGE5A9UAgyNRvt03I7eQuOjJET8FJITwA4nssMw5iLr5JpqcmIStZpiocq0im4wuc3yHfIQASjHheuko3xS005exparsA', {
+});
+
 console.log("Hello via Bun!")
 
 const corsHeaders = {
@@ -44,10 +49,28 @@ Bun.serve({
             return new Response(JSON.stringify(false), {
                 headers: corsHeaders
             })
-        } if (url.pathname == "/subscription") {
-
-            return new Response()
-        } else {
+        } if (url.pathname === "/create-payment-intent") {
+            async function subscription() {
+                console.log("Hit create payment intent")
+                const { items } = await req.json();
+      
+                // Create a PaymentIntent with the order amount and currency
+                const paymentIntent = await stripe.paymentIntents.create({
+                  amount: 1000,
+                  currency: "usd",
+                  automatic_payment_methods: {
+                    enabled: true,
+                  },
+                });
+          
+                return new Response(JSON.stringify({
+                  clientSecret: paymentIntent.client_secret,
+                }), {
+                    headers: corsHeaders
+                });
+            }
+            return subscription()
+          } else {
             return new Response()
         }
     }
