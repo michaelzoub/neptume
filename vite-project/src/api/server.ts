@@ -1,9 +1,10 @@
 import { Message } from "../interfaces/Message"
 import { Query } from "../interfaces/Query"
 import { sendTransaction } from "../utils/sendTransaction"
+import { apiEndpoint } from "../data/apiEndpoint"
 
 export async function GET() {
-   const response = await fetch("machinai.com/api/fdsf", {
+   const response = await fetch(`${apiEndpoint}/api`, {
     method: "GET",
     headers: {
         "Content-Type": "application/json",
@@ -24,7 +25,7 @@ export async function POST(data: Query) {
     const randomInteger = Math.floor(Math.random() * 300)
     const timeSplit = new Date().toLocaleTimeString().split(":")[0] + ":" + new Date().toLocaleTimeString().split(":")[1]
     try {
-        const response = await fetch("http://localhost:8080/openai", {
+        const response = await fetch(`${apiEndpoint}/openai`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -34,6 +35,7 @@ export async function POST(data: Query) {
         const body = await response.json()
         console.log("Response from backend: ", body)
         let object
+        //copy this function into utils (code cleanup)
         if (body.type == "chain") {
             object = {
                 id: randomInteger,

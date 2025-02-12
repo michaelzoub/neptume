@@ -1,7 +1,8 @@
 import { Query } from "../interfaces/Query"
+import { apiEndpoint } from "../data/apiEndpoint"
 
 export async function POST(data: Query) {
-    const response = await fetch("http://localhost:3000/database", {
+    const response = await fetch(`${apiEndpoint}/database`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
