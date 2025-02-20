@@ -2,6 +2,8 @@ import { sendInitMsg } from "./services/openai"
 import { type } from "./utils/typeof"
 import { checkDB } from "./utils/db"
 import Stripe from 'stripe';
+import { checkNumTries } from "./utils/checkNumTries";
+import { checkUserSubscription } from "./utils/checkUserSubscription";
 
 const stripe = new Stripe('sk_test_51Q2bQIGE5A9UAgyNRvt03I7eQuOjJET8FJITwA4nssMw5iLr5JpqcmIStZpiocq0im4wuc3yHfIQASjHheuko3xS005exparsA', {
 });
@@ -29,10 +31,26 @@ Bun.serve({
             console.log("AI hit.")
             //first check if user has access (in database)
             async function ai() {
-                //calling ai
                 const body = await req.json()
                 console.log("Body: ", body)
-                const dbResponse = checkDB(body.address)
+                //check if user has subscription, store cache for 24 hours
+
+                const subscription = await checkUserSubscription(body.address)
+                
+                if (!subscription) {
+                    const checkDB = await checkNumTries(body.address)
+                    if (!checkDB) {
+                        const returnObject = {
+                            type: "error",
+                            result: false,
+                            message: "No more tries. Consider subscribing to Neptume for unlimited usage!",
+                            parties: ""
+                        }
+                        return new Response(JSON.stringify(returnObject), {
+                            headers: corsHeaders
+                        })
+                    }
+                }
                 const response = await sendInitMsg(body.message, body.contextInfo)
                 console.log("Initial message received from AI: ", response)
                 //turn into data object depending on response
@@ -44,11 +62,14 @@ Bun.serve({
             }
             return ai()
         } if (url.pathname == "/database") {
-            //return true or false
-            //then update user object
-            return new Response(JSON.stringify(false), {
-                headers: corsHeaders
-            })
+            async function database() {
+                const body = await req.json()
+                //return true or false
+                return new Response(JSON.stringify(false), {
+                    headers: corsHeaders
+                })
+            }
+            return database()
         } if (url.pathname === "/create-payment-intent") {
             async function subscription() {
                 console.log("Hit create payment intent")
