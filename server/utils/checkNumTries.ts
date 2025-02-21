@@ -19,16 +19,15 @@ await client.connect();
 
 export async function checkNumTries(address: string): Promise<boolean> {
     //first check if address exists
-    const key = await client.get(address);
-    if (!key) {
-        //sets number of tries
-        await createNewStore(address)
-    }
-    const attempts = client.get(key || "")
-    if (Number(attempts) <= 10) {
+    let attempts = await client.get(address);
+    if (attempts === null) {
         //create new store
-        let incr = Number(attempts);
-        await client.set(address, ++incr)
+        await createNewStore(address)
+        attempts = "0"
+    }
+    if (Number(attempts) <= 10) {
+        //let incr = Number(attempts);
+        await client.incr(address);
         return true
     } else {
         return false

@@ -4,6 +4,7 @@ import { checkDB } from "./utils/db"
 import Stripe from 'stripe';
 import { checkNumTries } from "./utils/checkNumTries";
 import { checkUserSubscription } from "./utils/checkUserSubscription";
+import { generateJWT } from "./utils/generateJWT";
 
 const stripe = new Stripe('sk_test_51Q2bQIGE5A9UAgyNRvt03I7eQuOjJET8FJITwA4nssMw5iLr5JpqcmIStZpiocq0im4wuc3yHfIQASjHheuko3xS005exparsA', {
 });
@@ -35,7 +36,8 @@ Bun.serve({
                 console.log("Body: ", body)
                 //check if user has subscription, store cache for 24 hours
 
-                const subscription = await checkUserSubscription(body.address)
+                //const subscription = await checkUserSubscription(body.address)
+                const subscription = await generateJWT(body.jwt, body.address);
                 
                 if (!subscription) {
                     const checkDB = await checkNumTries(body.address)
