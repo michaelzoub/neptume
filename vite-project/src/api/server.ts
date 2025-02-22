@@ -25,6 +25,7 @@ export async function POST(data: Query) {
     const randomInteger = Math.floor(Math.random() * 300)
     const timeSplit = new Date().toLocaleTimeString().split(":")[0] + ":" + new Date().toLocaleTimeString().split(":")[1]
     try {
+        console.log(apiEndpoint)
         const response = await fetch(`${apiEndpoint}/openai`, {
             method: "POST",
             headers: {
@@ -47,7 +48,8 @@ export async function POST(data: Query) {
                     to: "",
                     abi: "",
                     wei: 0
-                }
+                },
+                jwt: data.jwt
             }
         } else if (body.type == "sendTransaction") {
             console.log("Send Transaction type")
@@ -64,7 +66,8 @@ export async function POST(data: Query) {
                     to: parties.to[0],
                     abi: sendTxObject.abi,
                     wei: sendTxObject.wei
-                }
+                },
+                jwt: sendTxObject.jwt
             }
             //sends tx
             //await sendTransaction(sendTxObject.chainId, parties.to[0], sendTxObject.abi, sendTxObject.wei)
@@ -82,7 +85,8 @@ export async function POST(data: Query) {
                     },
                     abi: body.parties.abi,
                     wei: body.parties.amount
-                }
+                },
+                jwt: body.jwt
             }
         } else {
             object = {
@@ -95,7 +99,8 @@ export async function POST(data: Query) {
                     to: "",
                     abi: "",
                     wei: 0
-                }
+                },
+                jwt: body.jwt
             }
         }
         return object
@@ -111,7 +116,8 @@ export async function POST(data: Query) {
                 to: "",
                 abi: "",
                 wei: 0
-            }
+            },
+            jwt: data.jwt
         }
     }
 }

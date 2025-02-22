@@ -8,10 +8,11 @@ export async function checkUserSubscription(address: string): Promise<boolean> {
     //first check if address exists
     const { db } = await connectToDatabase();
     const collection = db.collection("users");
-    const user = await collection.findOne({ wallet: address });
+    const user = await collection.findOne({ address: address });
+    console.log(user);
     //^ this gets the whole object
 
-    if (!user.subscription) {
+    if (!user?.subscription) {
         return false
     } else if (user.subscription) {
         //logic for jwt tokens

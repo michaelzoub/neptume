@@ -1,3 +1,3 @@
-const API_ENDPOINT = import.meta.env.API_ENDPOINT;
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT; 
 
-export const apiEndpoint: string = (API_ENDPOINT || "string");
+export const apiEndpoint: string = API_ENDPOINT ?? "string"; 

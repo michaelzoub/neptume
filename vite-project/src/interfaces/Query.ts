@@ -3,5 +3,6 @@ export interface Query {
     address: string,
     time: string,
     chainId: number,
-    contextInfo: any
+    contextInfo: unknown,
+    jwt: string
 }

@@ -10,6 +10,8 @@ import { useWallets } from "@privy-io/react-auth"
 import { sendTransaction } from "../../utils/sendTransaction"
 import { To } from "../../interfaces/Message"
 import { ethersSwap } from "../../libs/ethers"
+import { getJWT } from "../../utils/getJWT"
+import { setJWT } from "../../utils/setJWT"
 
 export default function Input({color}: {color: string}) {
 
@@ -31,12 +33,14 @@ export default function Input({color}: {color: string}) {
         console.log(`address and chainid: ${addresss}, ${chainIdd}`)
         setEntered(false)
         const timeSplit = new Date().toLocaleTimeString().split(":")[0] + ":" + new Date().toLocaleTimeString().split(":")[1]
+        const jwt = getJWT();
         const query = {
             message: message,
             address: addresss,
             time: new Date().toString(),
             chainId: chainIdd,
-            contextInfo: ""
+            contextInfo: "",
+            jwt: jwt
         }
         setMessages((prev) => [...prev,
             {
@@ -49,12 +53,14 @@ export default function Input({color}: {color: string}) {
                     to: "",
                     abi: "",
                     wei: 0
-                }
+                },
+                jwt: ""
             },
         ])
         //TO DO: perfom swap and transaction logic here for now, organize this once performance is critical
         const additionalInfo = await chatUpdate(query)
         const neededInfo = additionalInfo.neededInfo
+        setJWT(additionalInfo.jwt)
         if (additionalInfo.message == "Sending transaction..." && typeof neededInfo.to == "string") {
             await sendTransaction(neededInfo.chaindId, neededInfo.to, JSON.parse(neededInfo.abi), neededInfo.wei, wallets)
         } else if (additionalInfo.message == "Swapping..." && typeof neededInfo.to !== "string") {

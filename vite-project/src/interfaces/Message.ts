@@ -13,5 +13,6 @@ export interface Message {
         to: string | To,
         abi: any,
         wei: number
-    }
+    },
+    jwt: string
 }

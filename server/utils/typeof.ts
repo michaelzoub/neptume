@@ -20,7 +20,8 @@ const object = {
     type: "",
     result: true,
     message: "",
-    parties: parties
+    parties: parties,
+    jwt: ""
 }
 
 
@@ -36,7 +37,8 @@ const returnObject = {
     type: "sendTransaction",
     result: true,
     message: sendTxObject,
-    parties: parties
+    parties: parties,
+    jwt: ""
 }
 
 export async function type(aiResponse: string, address: string, originalQuery: string, chainId: number) {

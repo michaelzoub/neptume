@@ -1,6 +1,5 @@
 import { sendInitMsg } from "./services/openai"
 import { type } from "./utils/typeof"
-import { checkDB } from "./utils/db"
 import Stripe from 'stripe';
 import { checkNumTries } from "./utils/checkNumTries";
 import { checkUserSubscription } from "./utils/checkUserSubscription";
@@ -37,6 +36,7 @@ Bun.serve({
                 //check if user has subscription, store cache for 24 hours
 
                 //const subscription = await checkUserSubscription(body.address)
+                console.log("JWT: " + body.jwt);
                 const subscription = await generateJWT(body.jwt, body.address);
                 
                 if (!subscription) {
@@ -46,7 +46,8 @@ Bun.serve({
                             type: "error",
                             result: false,
                             message: "No more tries. Consider subscribing to Neptume for unlimited usage!",
-                            parties: ""
+                            parties: "",
+                            jwt: ""
                         }
                         return new Response(JSON.stringify(returnObject), {
                             headers: corsHeaders
@@ -57,6 +58,7 @@ Bun.serve({
                 console.log("Initial message received from AI: ", response)
                 //turn into data object depending on response
                 const object = await type(response, body.address, body.message, body.chainId)
+                object.jwt = subscription.jwt;
                 console.log("Data object ready to be sent to frontend: ", object)
                 return new Response(JSON.stringify(object), {
                     headers: corsHeaders

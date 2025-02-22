@@ -17,7 +17,8 @@ const messagesInitial = [
             to: "",
             abi: "",
             wei: 0
-        }
+        },
+        jwt: ""
     }, 
 ]
 
