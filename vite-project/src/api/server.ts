@@ -88,6 +88,20 @@ export async function POST(data: Query) {
                 },
                 jwt: body.jwt
             }
+        } else if (body.type == "subscription") {
+            object = {
+                id: randomInteger,
+                sender: "assistant",
+                message: body.message,
+                timestamp: timeSplit,
+                neededInfo: {
+                    chaindId: 1,
+                    to: "",
+                    abi: "",
+                    wei: 0
+                },
+                jwt: body.jwt
+            }
         } else {
             object = {
                 id: randomInteger,

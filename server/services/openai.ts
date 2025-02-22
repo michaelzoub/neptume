@@ -30,7 +30,8 @@ export async function sendInitMsg(message: string, contextInfo: string) {
                   1. "question" for queries asking for information (balances, prices, transaction history, etc.)
                   2. "swap" for requests to exchange one cryptocurrency for another.
                   3. "modification" for requests to change wallet settings or network configurations.
-                  4. "transaction" for requests to send cryptocurrency to one or more accounts, containing a valid amount and wallet address.`
+                  4. "transaction" for requests to send cryptocurrency to one or more accounts, containing a valid amount and wallet address.
+                  5. "subscription": For any requests to subscribe to the service (e.g., monthly payment subscriptions).`
             },
             {
                 role: "user",

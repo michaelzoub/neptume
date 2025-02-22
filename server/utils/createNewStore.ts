@@ -17,5 +17,5 @@ client.on('error', (err: any) => console.log('Redis Client Error', err));
 await client.connect();
 
 export async function createNewStore(address:string) {
-    await client.set(address, 0);
+    await client.set(address, "0");
 }

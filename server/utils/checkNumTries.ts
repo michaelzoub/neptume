@@ -18,6 +18,7 @@ client.on('error', (err: any) => console.log('Redis Client Error', err));
 await client.connect();
 
 export async function checkNumTries(address: string): Promise<boolean> {
+    console.log("Check NUMTRIES hit");
     //first check if address exists
     let attempts = await client.get(address);
     if (attempts === null) {
@@ -27,7 +28,8 @@ export async function checkNumTries(address: string): Promise<boolean> {
     }
     if (Number(attempts) <= 10) {
         //let incr = Number(attempts);
-        await client.incr(address);
+        const testing = await client.incr(address);
+        console.log(testing)
         return true
     } else {
         return false

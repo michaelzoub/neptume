@@ -43,7 +43,8 @@ export default function Recommendations() {
                             to: "",
                             abi: "",
                             wei: 0
-                        }
+                        },
+                        jwt: (localStorage.getItem("jwt") || "")
                     },
                 ])
     }

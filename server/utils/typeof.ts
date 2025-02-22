@@ -115,6 +115,10 @@ export async function type(aiResponse: string, address: string, originalQuery: s
         parties.to[0] = to
 
         return returnObject
+    } else if (aiResponse == "subscription") {
+        object.type = "subscription";
+        object.message = "I will be redirecting you to the payment page instantly. @@@subscription";
+        console.log(object);
     } else {
         object.type = "Error"
         object.result = false

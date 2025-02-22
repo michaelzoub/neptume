@@ -38,8 +38,9 @@ Bun.serve({
                 //const subscription = await checkUserSubscription(body.address)
                 console.log("JWT: " + body.jwt);
                 const subscription = await generateJWT(body.jwt, body.address);
+                console.log(subscription);
                 
-                if (!subscription) {
+                if (!subscription.boo) {
                     const checkDB = await checkNumTries(body.address)
                     if (!checkDB) {
                         const returnObject = {
@@ -47,13 +48,24 @@ Bun.serve({
                             result: false,
                             message: "No more tries. Consider subscribing to Neptume for unlimited usage!",
                             parties: "",
-                            jwt: ""
+                            jwt: subscription.jwt
                         }
                         return new Response(JSON.stringify(returnObject), {
                             headers: corsHeaders
                         })
+                    } else {
+                        const response = await sendInitMsg(body.message, body.contextInfo)
+                        console.log("Initial message received from AI: ", response)
+                        //turn into data object depending on response
+                        const object = await type(response, body.address, body.message, body.chainId)
+                        object.jwt = subscription.jwt;
+                        console.log("Data object ready to be sent to frontend: ", object)
+                        return new Response(JSON.stringify(object), {
+                            headers: corsHeaders
+                        })
                     }
                 }
+                //if user has subscription:
                 const response = await sendInitMsg(body.message, body.contextInfo)
                 console.log("Initial message received from AI: ", response)
                 //turn into data object depending on response
