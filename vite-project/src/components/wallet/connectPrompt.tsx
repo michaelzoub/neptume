@@ -59,7 +59,7 @@ export default function ConnectWalletButton({color}: {color: string}) {
 
     return <motion.button
     style={{ backgroundColor: color }}
-    className="absolute text-white p-2 px-4 rounded-full m-4 self-end"
+    className="text-black font-medium py-3 px-4 text-sm rounded-xl m-4 self-end"
     onClick={handleConnect}
     transition={{
       delay: 0.02,

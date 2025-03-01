@@ -36,6 +36,18 @@ const Comb = () => <main className='flex w-full h-screen overflow-hidden justify
 </main>
 
 
+const MainPage = () =>  
+      <PrivyProvider
+        appId="cm5hc8qro0ec3l1zrv6xwfx99" 
+        config={{
+          defaultChain: base,
+          supportedChains: [base, polygon, mainnet, optimism, avalanche, worldchain, arbitrum, sepolia, baseSepolia] 
+      }}
+      >
+        <Home />
+    </PrivyProvider>
+
+
 function App() {
 
     const [clientSecret, setClientSecret] = useState("");
@@ -65,7 +77,7 @@ function App() {
         <Route path="/" element={<Comb></Comb>}></Route>
         <Route path="/checkout" element={<CheckoutForm />} />
         <Route path="/complete" element={<CompletePage />} />
-        <Route path="/mainpage" element={<Home />}></Route>
+        <Route path="/mainpage" element={<MainPage />}></Route>
       </Routes>
       </Elements>)}
     </Router>

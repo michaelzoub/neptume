@@ -12,7 +12,6 @@ import { To } from "../../interfaces/Message"
 import { ethersSwap } from "../../libs/ethers"
 import { getJWT } from "../../utils/getJWT"
 import { setJWT } from "../../utils/setJWT"
-import { navigatePaymentPage } from "../../utils/navigatePaymentPage"
 
 export default function Input({color}: {color: string}) {
 
@@ -76,7 +75,7 @@ export default function Input({color}: {color: string}) {
             const message = additionalInfo.message;
             const splitSecond = message.split("@@@")[1];
             if (splitSecond.includes("subscription")) {
-                navigatePaymentPage();
+                
             }
         }
         setMessage("")
