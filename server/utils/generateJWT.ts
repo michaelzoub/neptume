@@ -43,30 +43,48 @@ async function verifyJWT(token: string) {
 
 export async function generateJWT(jwtToken: string, walletAddress: string): Promise<returnObject> {
     //first check wether or not theres a jwt passed
-    if (jwtToken == "") {
-        //create store in db
-        await createNewAccountDB(walletAddress);
-        const newJWT = await createJWT(walletAddress, false);
-        console.log("Created jwt: " + newJWT);
-        return {
-            boo: false,
-            jwt: newJWT
-        };
-    }
-    const check = await checkUserSubscription(walletAddress);
-    const verification = await verifyJWT(jwtToken);
-    const currentTime = Date.now();
-    const expiryTime = verification.iat;
-    if (currentTime > (expiryTime || 0)) {
-        const newJWT = await createJWT(walletAddress, check);
-        return {
-            boo: false,
-            jwt: newJWT
-        };
-    } else {
-        return {
-            boo: true,
-            jwt: jwtToken
-        };
-    }
+    try {
+        if (jwtToken == "") {
+            //create store in db
+            await createNewAccountDB(walletAddress);
+            const newJWT = await createJWT(walletAddress, false);
+            console.log("Created jwt: " + newJWT);
+            return {
+                boo: false,
+                jwt: newJWT
+            };
+        }
+        const check = await checkUserSubscription(walletAddress);
+        const verification = await verifyJWT(jwtToken);
+        const currentTime = Date.now();
+        const expiryTime = verification.iat;
+        if (currentTime > (expiryTime || 0)) {
+            const newJWT = await createJWT(walletAddress, check);
+            return {
+                boo: false,
+                jwt: newJWT
+            };
+        } else {
+            return {
+                boo: true,
+                jwt: jwtToken
+            };
+        }
+    } catch (error: any) {
+        console.log(error);
+        //create new JWT if err_jwt_expired:
+        if (error.code == "ERR_JWT_EXPIRED") {
+            const check = await checkUserSubscription(walletAddress);
+            const newJWT = await createJWT(walletAddress, check);
+            return {
+                boo: false,
+                jwt: newJWT
+            };
+        } else {
+            return {
+                boo: false,
+                jwt: jwtToken
+            };
+        }
+    } 
 }

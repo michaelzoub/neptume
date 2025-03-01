@@ -86,9 +86,9 @@ export default function Input({color}: {color: string}) {
     }
 
     return (
-        <div className={`flex flex-col w-full h-fit self-end h-[12%] p-2 py-4 border-t border-neutral-600`}>
+        <div className={`flex flex-col w-full h-fit self-end h-[12%] p-2 py-2 border-t border-neutral-600`}>
             <form className="flex flex-row w-full h-fit relative items-center text-white" onSubmit={handleSubmit}>
-                <input className={`w-full text-sm h-fit p-2 py-[10px] rounded-xl border-[0px] pr-20 border-neutral-600 bg-neutral-700`} type="text" placeholder="Type a message..." onChange={(e) => setMessage(e.target.value)} />
+                <input className={`w-full text-sm h-fit p-2 py-[10px] rounded-xl border-[0px] pr-20 border-neutral-600 bg-zinc-700`} type="text" placeholder="Type a message..." onChange={(e) => setMessage(e.target.value)} />
                 <motion.button 
                     className="outline-none absolute end-0  text-black py-[3px] px-4 text-sm rounded-xl m-2 shadow-md hover:shadow-lg hover:shadow-white focus:outline-none focus-visible:outline-none border-none focus:ring-0 focus:ring-offset-0" 
                     style={{

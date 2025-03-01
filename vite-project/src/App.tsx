@@ -13,6 +13,7 @@ import CheckoutForm from './components/payment/CheckoutForm'
 import CompletePage from './components/payment/CompletePage'
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import Home from './components/pagedesignmarketingsite/Moneo/src/app/page'
 
 const stripePromise = loadStripe("pk_test_51Q2bQIGE5A9UAgyNu086KZ7FhBZf5FY14qzqcOOIHpfRGWyv3s42PpQt2vEFxD0npnIdtq1YyRMfT8xCKhcSXoZB00oxrKwmuE");
 
@@ -64,6 +65,7 @@ function App() {
         <Route path="/" element={<Comb></Comb>}></Route>
         <Route path="/checkout" element={<CheckoutForm />} />
         <Route path="/complete" element={<CompletePage />} />
+        <Route path="/mainpage" element={<Home />}></Route>
       </Routes>
       </Elements>)}
     </Router>

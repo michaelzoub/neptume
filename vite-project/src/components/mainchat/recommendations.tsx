@@ -74,7 +74,7 @@ export default function Recommendations() {
         >
             {
                 recommendations.map((e: string) =>
-                    <button className="text-xs w-[31%] break-words p-2 bg-neutral-800 border-[1px] border-neutral-700 text-neutral-500 text-left shadow shadow-inner" onClick={() => handleButtonClick(e)}>{e}</button>
+                    <button className="text-xs w-[31%] break-words p-2 bg-zinc-800 border-[1px] border-neutral-700 text-neutral-500 text-left shadow shadow-inner" onClick={() => handleButtonClick(e)}>{e}</button>
                 )
             }
         </motion.div>
