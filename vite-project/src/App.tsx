@@ -11,7 +11,7 @@ import CheckoutForm from './components/payment/CheckoutForm'
 import CompletePage from './components/payment/CompletePage'
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import Home from './components/pagedesignmarketingsite/Moneo/src/app/combined'
+import Home from './components/marketing/combined'
 //
 const stripePromise = loadStripe("pk_test_51Q2bQIGE5A9UAgyNu086KZ7FhBZf5FY14qzqcOOIHpfRGWyv3s42PpQt2vEFxD0npnIdtq1YyRMfT8xCKhcSXoZB00oxrKwmuE");
 
