@@ -1,0 +1,235 @@
+/* Mobile-first styles for Hero section */
+@media screen and (max-width: 768px) {
+  /* Only hero-related mobile styles */
+  .inline-block.px-4.py-1.text-sm.font-medium.text-blue-400.bg-blue-900\/30.rounded-full {
+    display: none;
+  }
+
+  h1.text-4xl {
+    font-size: 3.5rem !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Position the wallet on mobile */
+  .flex-1.flex.justify-center.lg\:justify-end {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Disable fadeout effect on mobile */
+  [style*="opacity"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Updated Supported Chains section positioning for mobile */
+  section.py-0.-mt-64 {
+    margin-top: -10rem !important;
+    padding-top: 0 !important;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Features section mobile optimization */
+  .space-y-32 {
+    margin-top: 2rem;
+    gap: 4rem !important;
+  }
+
+  .flex.items-center.gap-16 {
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
+  .text-5xl.md\:text-6xl {
+    font-size: 2.5rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .text-4xl.font-bold {
+    font-size: 2rem !important;
+    text-align: center !important;
+  }
+
+  .text-gray-400.text-lg {
+    text-align: center !important;
+    font-size: 1rem !important;
+    margin-top: 0.5rem !important;
+  }
+
+  /* Center feature content on mobile */
+  .flex-1 {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* Adjust video container size */
+  .w-\[400px\].h-\[660px\], 
+  .w-\[400px\].h-\[600px\],
+  .w-\[400px\].h-\[540px\],
+  .w-\[400px\].h-\[480px\] {
+    width: 100% !important;
+    max-width: 400px !important;
+    height: 480px !important;
+    margin: 0 auto;
+  }
+
+  /* Hide header logo on mobile but keep nav button */
+  header .relative.w-48.h-12 {
+    display: none !important;
+  }
+
+  /* Keep nav button visible */
+  header .md\:hidden {
+    display: flex !important;
+  }
+
+  /* Center the mobile nav button */
+  header nav {
+    justify-content: flex-end !important;
+    padding: 0 1rem;
+  }
+
+  /* Fix header for mobile */
+  header {
+    position: fixed !important;
+    top: 0 !important;
+    width: 100% !important;
+    background: rgba(0, 6, 13, 0.8) !important;
+    backdrop-filter: blur(8px) !important;
+    padding: 1rem !important;
+    z-index: 50 !important;
+  }
+
+  /* Show both logo and nav button */
+  header .relative.w-48.h-12 {
+    display: block !important;
+    width: 140px !important;
+    height: 36px !important;
+  }
+
+  /* Layout header items */
+  header nav {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  /* Keep nav button visible and properly sized */
+  header .md\:hidden {
+    display: flex !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  /* Add padding to main content to account for fixed header */
+  main, section:first-of-type {
+    padding-top: 64px !important;
+  }
+
+  /* Adjust spacing for mobile */
+  section:first-of-type {
+    padding-top: 10rem !important;
+  }
+
+  /* Adjust wallet position on mobile */
+  .flex-1.flex.justify-center.lg\:justify-end {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* Adjust title spacing */
+  .space-y-4 {
+    margin-bottom: 1rem !important;
+  }
+
+  /* Adjust vertical gap between title and wallet */
+  .gap-4.lg\:gap-8 {
+    gap: 0 !important;
+  }
+
+  /* Increase spacing between nav and content on mobile */
+  section:first-of-type {
+    padding-top: 10rem !important;
+  }
+
+  main, section:first-of-type {
+    padding-top: 10rem !important;
+  }
+
+  /* Remove any gap between title and wallet on mobile */
+  .gap-0.lg\:gap-4 {
+    gap: 0 !important;
+  }
+
+  /* Adjust wallet position on mobile */
+  .flex-1.flex.justify-center.lg\:justify-end {
+    margin-top: -2rem !important; /* Negative margin to pull wallet up */
+    padding-top: 0 !important;
+  }
+
+  /* Keep wallet centered on mobile */
+  .flex-1.flex.justify-center {
+    margin-left: 0 !important;
+  }
+}
+
+/* Tablet styles */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .hero-container {
+    padding-top: 8rem;
+  }
+
+  .wallet-demo-container {
+    transform: scale(0.85);
+  }
+}
+
+/* Ensure smooth transitions */
+.hero-container,
+.wallet-demo-container,
+.hero-text,
+.hero-cta {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Adjust desktop layout */
+@media screen and (min-width: 769px) {
+  /* Increase spacing between nav and content */
+  section:first-of-type {
+    padding-top: 12rem !important;
+  }
+
+  /* Keep wallet and title close together */
+  .gap-8 {
+    gap: 2rem !important;
+  }
+
+  /* Reduce gap between title and wallet on desktop */
+  .gap-4 {
+    gap: 1rem !important;
+  }
+
+  /* Adjust gap between title and wallet on desktop */
+  .gap-16 {
+    gap: 4rem !important;
+  }
+
+  /* Center the wallet demo */
+  .flex-1.flex.justify-center {
+    margin-left: 2rem !important;
+  }
+
+  /* Adjust desktop spacing between title and subtitle */
+  h1.text-4xl {
+    margin-bottom: 2rem !important;
+  }
+
+  .text-gray-400.text-lg {
+    margin-top: 0.75rem !important;
+  }
+} 
