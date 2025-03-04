@@ -48,7 +48,7 @@ export default function OpenSign({color}: {color: string}) {
                     initial={{ rotate: 0, opacity: 0 }}
                 />
                 <span 
-                    className="text-xl duration-200 ease-in-out z-10 m-2"
+                    className="flex text-xl duration-200 ease-in-out z-10 items-center justify-center"
                     style={{ color: color }}
                 >+</span>
             </motion.button>

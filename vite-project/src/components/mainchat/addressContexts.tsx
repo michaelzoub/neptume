@@ -52,7 +52,7 @@ export default function AddressContexts({state}: {state: boolean}) {
         >
             <div className="flex flex-row justify-between mb-3">
                 <h2 className="text-sm text-neutral-400">Add names to addresses!</h2>
-                <div className="h-fit mt-[3px] text-neutral-400 hover:text-neutral-300 hover:cursor-pointer ease-in-out transition" onClick={() => setEntered(false)}>
+                <div className="h-fit mt-[3px] text-neutral-400 mr-[10px] hover:text-neutral-300 hover:cursor-pointer ease-in-out transition" onClick={() => setEntered(false)}>
                     <svg  width="14" height="14" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                         <line x1="3" y1="3" x2="13" y2="13" stroke="currentColor" strokeWidth="1.5" />
                         <line x1="13" y1="3" x2="3" y2="13" stroke="currentColor" strokeWidth="1.5" />

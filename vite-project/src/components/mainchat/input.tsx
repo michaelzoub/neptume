@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { messageAtom } from "../../atoms/messages"
 import { messagesAtom } from "../../atoms/messages"
 import { enteredAtom } from "../../atoms/entered"
+import { recommendation } from "../../atoms/recommendation"
 import { chatUpdate } from "../../state/chatUpdate"
 import { address, chainId } from "../../atoms/walletinfo"
 import { useWallets } from "@privy-io/react-auth"
@@ -21,11 +22,13 @@ export default function Input({color}: {color: string}) {
     const [messages, setMessages] = useAtom(messagesAtom)
     const [hovered, setHovered] = useState(false)
     const [entered, setEntered] = useAtom(enteredAtom)
+    const [,setRecommend] = useAtom(recommendation);
 
     const [addresss] = useAtom(address)
     const [chainIdd] = useAtom(chainId)
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        setRecommend(false);
         e.preventDefault()
         e.currentTarget.reset()
         console.log(message)

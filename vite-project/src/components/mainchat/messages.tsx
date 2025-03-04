@@ -49,7 +49,7 @@ export default function Messages({color, secondary}: {color: string, secondary: 
         <div className="z-100 flex flex-col h-[78%] mx-2 py-0 border-neutral-600 bg-zinc-800">
             <div className="z-100 sidebar flex flex-col w-full h-full gap-2 overflow-y-auto py-2 bg-zinc-800" ref={messageRef}>
                 {messages.map((message) => (
-                    <motion.div className={`z-100 flex flex-col h-fit w-fit max-w-[150px] ${message.sender === "user" ? "self-end" : "self-start"}`} key={message.id}
+                    <motion.div className={`z-100 flex flex-col h-fit w-fit max-w-[150px] text-black ${message.sender === "user" ? "self-end" : "self-start"}`} key={message.id}
                     initial={{ scale: 0, opacity: 0, translateY: 150 }}
                     animate={{ scale: 1, opacity: 1, translateY: 0 }}
                     transition={{
