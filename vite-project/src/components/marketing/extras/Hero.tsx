@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useGradientScroll } from "../../pagedesignmarketingsite/Moneo/src/hooks/useGradientScroll";
+import { useGradientScroll } from "./hooks/useGradientScroll";
 import { useEffect } from 'react';
 import Combined from "../../mainchat/combined";
 import OpenSign from "../../mainchat/openSign";

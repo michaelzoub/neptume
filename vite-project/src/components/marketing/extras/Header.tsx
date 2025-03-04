@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { useScrollDirection } from "../../pagedesignmarketingsite/Moneo/src/hooks/useScrollDirection";
+import { useScrollDirection } from "./hooks/useScrollDirection";
 import ConnectWalletButton from "../../wallet/connectPrompt";
 
 export default function Header() {
