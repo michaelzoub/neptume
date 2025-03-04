@@ -1,9 +1,9 @@
-import Header from "../pagedesignmarketingsite/Moneo/src/components/Header";
-import Hero from "../pagedesignmarketingsite/Moneo/src/components/Hero";
-import Features from "../pagedesignmarketingsite/Moneo/src/components/Features";
-import SupportedChains from "../pagedesignmarketingsite/Moneo/src/components/SupportedChains";
-import Footer from "../pagedesignmarketingsite/Moneo/src/components/Footer";
-import BackgroundLines from "../pagedesignmarketingsite/Moneo/src/components/BackgroundLines";
+import Header from "./extras/Header";
+import Hero from "./extras/Hero";
+import Features from "./extras/Features";
+import SupportedChains from "./extras/SupportedChains";
+import Footer from "./extras/Footer";
+import BackgroundLines from "./extras/BackgroundLines";
 import "./globals.css";
 import "./hero.css"
 
