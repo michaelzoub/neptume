@@ -72,7 +72,7 @@ function App() {
       {clientSecret && (
       <Elements options={{clientSecret, appearance, loader}} stripe={stripePromise}>
       <Routes>
-        <Route path="/" element={<Comb></Comb>}></Route>
+        <Route path="/" element={<MainPage />}></Route>
         <Route path="/checkout" element={<CheckoutForm />} />
         <Route path="/complete" element={<CompletePage />} />
         <Route path="/mainpage" element={<MainPage />}></Route>
