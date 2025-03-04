@@ -3,12 +3,10 @@ import './App.css'
 import Combined from './components/mainchat/combined'
 import OpenSign from './components/mainchat/openSign'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
-import Marketing from './components/marketing/combined'
 import ConnectWalletButton from './components/wallet/connectPrompt'
 import { PrivyProvider } from '@privy-io/react-auth'
 import Modal from './components/modal'
 import { base, polygon, mainnet, optimism, avalanche, worldchain, arbitrum, sepolia, baseSepolia} from 'viem/chains'
-import { Link } from 'react-router-dom'
 import CheckoutForm from './components/payment/CheckoutForm'
 import CompletePage from './components/payment/CompletePage'
 import { loadStripe } from "@stripe/stripe-js";
