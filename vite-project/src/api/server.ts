@@ -1,6 +1,4 @@
-import { Message } from "../interfaces/Message"
 import { Query } from "../interfaces/Query"
-import { sendTransaction } from "../utils/sendTransaction"
 import { apiEndpoint } from "../data/apiEndpoint"
 
 export async function GET() {

@@ -9,9 +9,9 @@ import AddressContexts from "./addressContexts";
 
 export default function Combined({color, secondary}: {color: string, secondary: string}) {
     const [open, setOpen] = useAtom(openState);
-    const [translate, setTranslate] = useAtom(translateState);
-    const [rotate, setRotate] = useAtom(rotateState);
-    const [scale, setScale] = useAtom(scaleState);
+    const [, setTranslate] = useAtom(translateState);
+    const [, setRotate] = useAtom(rotateState);
+    const [, setScale] = useAtom(scaleState);
     const [entered, setEntered] = useAtom(enteredAtom);
 
     function handleClose() {

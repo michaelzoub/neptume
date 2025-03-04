@@ -1,6 +1,5 @@
 import {useConnectWallet} from '@privy-io/react-auth';
-import {useLogin} from '@privy-io/react-auth';
-import { useAtom, atom } from 'jotai';
+import { useAtom } from 'jotai';
 import { connected } from '../../atoms/walletinfo';
 import { motion } from "framer-motion"
 import { useEffect, useState } from 'react';

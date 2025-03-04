@@ -1,6 +1,6 @@
 import { useAtom } from "jotai"
 import { messageAtom, messagesAtom } from "../../atoms/messages"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useRef } from "react"
 import { Message } from "../../interfaces/Message"
 import { motion } from "framer-motion"
 

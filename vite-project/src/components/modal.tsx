@@ -20,7 +20,7 @@ export default function Modal({color}: {color: string}) {
         console.log("TESTING")
     }, [connected])
 
-    async function clickBehavior(e) {
+    async function clickBehavior(e: number) {
         setId(e)
         //switches chain on privy's network
         await wallet.switchChain(e)

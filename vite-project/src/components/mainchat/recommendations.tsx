@@ -2,8 +2,6 @@ import { motion } from "framer-motion"
 import { recommendation } from "../../atoms/recommendation"
 import { messageAtom } from "../../atoms/messages"
 import { messagesAtom } from "../../atoms/messages"
-import { chainId } from "../../atoms/walletinfo"
-import { address } from "../../atoms/walletinfo"
 import { useAtom } from "jotai"
 import { useEffect } from "react"
 
@@ -18,20 +16,11 @@ export default function Recommendations() {
     const [recommend, setRecommended] = useAtom(recommendation)
     const [message, setMessage] = useAtom(messageAtom)
     const [messages, setMessages] = useAtom(messagesAtom)
-    const [chain] = useAtom(chainId)
-    const [addy] = useAtom(address)
 
     async function handleButtonClick(msg: string) {
         setRecommended((e) => !e)
         setMessage(msg)
         const timeSplit = new Date().toLocaleTimeString().split(":")[0] + ":" + new Date().toLocaleTimeString().split(":")[1]
-                const query = {
-                    message: msg,
-                    address: addy,
-                    time: new Date().toString(),
-                    chainId: chain,
-                    contextInfo: ""
-                }
                 setMessages((prev) => [...prev,
                     {
                         id: prev[prev.length - 1].id + 1,

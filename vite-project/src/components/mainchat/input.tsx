@@ -1,5 +1,5 @@
-import { atom,useAtom } from "jotai"
-import { useEffect, useState } from "react"
+import { useAtom } from "jotai"
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { messageAtom } from "../../atoms/messages"
 import { messagesAtom } from "../../atoms/messages"
@@ -9,7 +9,6 @@ import { chatUpdate } from "../../state/chatUpdate"
 import { address, chainId } from "../../atoms/walletinfo"
 import { useWallets } from "@privy-io/react-auth"
 import { sendTransaction } from "../../utils/sendTransaction"
-import { To } from "../../interfaces/Message"
 import { ethersSwap } from "../../libs/ethers"
 import { getJWT } from "../../utils/getJWT"
 import { setJWT } from "../../utils/setJWT"
@@ -21,7 +20,7 @@ export default function Input({color}: {color: string}) {
     const [message, setMessage] = useAtom(messageAtom)
     const [messages, setMessages] = useAtom(messagesAtom)
     const [hovered, setHovered] = useState(false)
-    const [entered, setEntered] = useAtom(enteredAtom)
+    const [, setEntered] = useAtom(enteredAtom)
     const [,setRecommend] = useAtom(recommendation);
 
     const [addresss] = useAtom(address)

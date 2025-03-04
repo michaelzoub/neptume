@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useStripe } from "@stripe/react-stripe-js";
 import styles from "./StripeComponent.module.css";
 
