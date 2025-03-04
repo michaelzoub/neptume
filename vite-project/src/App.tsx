@@ -8,6 +8,7 @@ import CompletePage from './components/payment/CompletePage'
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Home from './components/marketing/combined'
+import { apiEndpoint } from './data/apiEndpoint'
 //
 const stripePromise = loadStripe("pk_test_51Q2bQIGE5A9UAgyNu086KZ7FhBZf5FY14qzqcOOIHpfRGWyv3s42PpQt2vEFxD0npnIdtq1YyRMfT8xCKhcSXoZB00oxrKwmuE");
 
@@ -29,7 +30,7 @@ function App() {
   
     useEffect(() => {
       // Create PaymentIntent as soon as the page loads
-      fetch("http://localhost:8080/create-payment-intent", {
+      fetch(`${apiEndpoint}/create-payment-intent`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items: [{ id: "Subscription", amount: 1 }] }),
