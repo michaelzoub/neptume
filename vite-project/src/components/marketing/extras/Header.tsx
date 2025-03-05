@@ -2,8 +2,18 @@
 import { Link } from "react-router-dom";
 import { useScrollDirection } from "./hooks/useScrollDirection";
 import ConnectWalletButton from "../../wallet/connectPrompt";
+import { useEffect, useState } from "react";
 
 export default function Header() {
+
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setMobile(true);
+    }
+  }, []);
+
   const scrollDirection = useScrollDirection();
   const mainColor = "#00CC96";
 
@@ -11,8 +21,8 @@ export default function Header() {
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       scrollDirection === "down" ? "-translate-y-full" : "translate-y-0"
     }`}>
-      <nav className="max-w-[1600px] mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+      <nav className="w-full mx-auto px-4 py-4">
+        <div className="flex w-full items-center justify-between">
           {/* Logo */}
           <Link to="/" className="relative w-48 h-12">
             <img
@@ -36,7 +46,9 @@ export default function Header() {
           </div>
 
           {/* Connect Wallet Button */}
-          <ConnectWalletButton color={mainColor}></ConnectWalletButton>
+          <div className={`${mobile ? "hidden" : "visible"}`}>
+            <ConnectWalletButton color={mainColor}></ConnectWalletButton>
+          </div>
 
           {/* Mobile Menu Button */}
           <button className="md:hidden p-2">

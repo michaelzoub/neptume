@@ -9,7 +9,7 @@ import "./hero.css"
 
 export default function Home() {
   return (
-    <div lang="en" className="font-sans antialiased">
+    <div lang="en" className="font-sans antialiased overflow-visible min-h-screen">
       <BackgroundLines />
       <div id="heroGradient" className="hero-gradient" />
       <main className="bg-zinc-950">

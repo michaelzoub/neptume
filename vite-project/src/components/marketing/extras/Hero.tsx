@@ -118,7 +118,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Right side - Wallet Demo */}
-          <div className="flex-1 relative flex justify-center items-center lg:justify-end mt-8 lg:mt-0 min-h-[600px]">
+          <div className="flex-1 relative flex justify-center items-center w-full lg:justify-end mt-8 lg:mt-0 min-h-[600px]">
             <div className={`relative w-full max-w-[400px] h-[460px] rounded-2xl border-zinc-700 transition ease-in-out delay-150 ${open ? "border-[0px]" : "border-[1px]"}`}>
               <OpenSign color={mainColor} />
               <Combined color={mainColor} secondary={secondaryColor} />
