@@ -29,14 +29,17 @@ function App() {
     const [clientSecret, setClientSecret] = useState("");
   
     useEffect(() => {
-      // Create PaymentIntent as soon as the page loads
-      fetch(`${apiEndpoint}/create-payment-intent`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: [{ id: "Subscription", amount: 1 }] }),
-      })
-        .then((res) => res.json())
-        .then((data) => setClientSecret(data.clientSecret));
+      const createPaymentIntent = async () => {
+        const response = await fetch(`${apiEndpoint}/create-payment-intent`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items: [{ id: "Subscription", amount: 1 }] }),
+        });
+        const data = await response.json();
+        setClientSecret(data.clientSecret);
+      };
+    
+      createPaymentIntent();
     }, []);
   
     const appearance = {
