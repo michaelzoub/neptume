@@ -38,7 +38,7 @@ export default function Combined({color, secondary}: {color: string, secondary: 
                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                 }}
             >
-                <div className="py-4 px-4 h-[12%] flex items-center justify-between border-b border-neutral-600">
+                <div className="py-4 px-4 h-[10%] flex items-center justify-between border-b border-neutral-600">
                     <div className="relative">
                         <button 
                             className="text-neutral-500 bg-zinc-700 flex items-center justify-center text-sm w-[34px] h-[34px] rounded-lg border-[1px] border-neutral-600" 
@@ -50,7 +50,7 @@ export default function Combined({color, secondary}: {color: string, secondary: 
                     </div>
                     <h2 className="text-neutral-500">Neptume</h2>
                     <button 
-                        className="text-neutral-500 bg-zinc-700 p-1 px-[10px] rounded-lg border-[1px] border-neutral-600" 
+                        className="text-neutral-500 bg-zinc-p- px-[8px] rounded-lg border-[0px] border-neutral-600" 
                         onClick={() => handleClose()}
                     >
                         ✖

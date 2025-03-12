@@ -62,7 +62,10 @@ export default function Input({color}: {color: string}) {
         //TO DO: perfom swap and transaction logic here for now, organize this once performance is critical
         const additionalInfo = await chatUpdate(query)
         const neededInfo = additionalInfo.neededInfo
-        setJWT(additionalInfo.jwt)
+        //== 0 means if chain not connected dont modify jwt
+        if (neededInfo.chaindId !== 0) {
+            setJWT(additionalInfo.jwt)
+        }
         if (additionalInfo.message == "Sending transaction..." && typeof neededInfo.to == "string") {
             await sendTransaction(neededInfo.chaindId, neededInfo.to, JSON.parse(neededInfo.abi), neededInfo.wei, wallets)
         } else if (additionalInfo.message == "Swapping..." && typeof neededInfo.to !== "string") {
@@ -87,7 +90,7 @@ export default function Input({color}: {color: string}) {
     }
 
     return (
-        <div className={`flex flex-col w-full h-fit self-end h-[12%] p-2 py-2 border-t border-neutral-600`}>
+        <div className={`flex flex-col w-full h-fit self-end h-[13%] p-2 py-2 border-t border-neutral-600`}>
             <form className="flex flex-row w-full h-fit relative items-center text-white" onSubmit={handleSubmit}>
                 <input className={`w-full text-sm h-fit p-2 py-[10px] rounded-xl border-[0px] pr-20 border-neutral-600 bg-zinc-700`} type="text" placeholder="Type a message..." onChange={(e) => setMessage(e.target.value)} />
                 <motion.button 

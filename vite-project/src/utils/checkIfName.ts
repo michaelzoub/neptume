@@ -1,5 +1,5 @@
 import { Query } from "../interfaces/Query"
-import { initialState } from "./storeAddressContext"
+import { initialState } from "./addressContext/storeAddressContext"
 import { userContext } from "../types/userContext"
 
 

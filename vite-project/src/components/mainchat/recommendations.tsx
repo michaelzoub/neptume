@@ -2,8 +2,10 @@ import { motion } from "framer-motion"
 import { recommendation } from "../../atoms/recommendation"
 import { messageAtom } from "../../atoms/messages"
 import { messagesAtom } from "../../atoms/messages"
+import { enteredAtom } from "../../atoms/entered"
 import { useAtom } from "jotai"
 import { useEffect } from "react"
+import { initialState } from "../../utils/addressContext/storeAddressContext"
 
 const recommendations = [
     "What's my total balance?",
@@ -16,8 +18,17 @@ export default function Recommendations() {
     const [recommend, setRecommended] = useAtom(recommendation)
     const [message, setMessage] = useAtom(messageAtom)
     const [messages, setMessages] = useAtom(messagesAtom)
+    const [, setEntered] = useAtom(enteredAtom);
 
     async function handleButtonClick(msg: string) {
+        if (msg.includes("Mike")) {
+            //verify if any address context exists, if not open the address context modal
+            if (initialState().length == 0) {
+                setTimeout(() => {
+                    setEntered(true);
+                }, 500)
+            }
+        }
         setRecommended((e) => !e)
         setMessage(msg)
         const timeSplit = new Date().toLocaleTimeString().split(":")[0] + ":" + new Date().toLocaleTimeString().split(":")[1]

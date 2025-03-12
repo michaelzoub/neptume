@@ -20,8 +20,24 @@ export async function GET() {
 //data string for now, make data structure for later (i guess the only data we need is user's address + their question)
 export async function POST(data: Query) {
 
-    const randomInteger = Math.floor(Math.random() * 300)
-    const timeSplit = new Date().toLocaleTimeString().split(":")[0] + ":" + new Date().toLocaleTimeString().split(":")[1]
+    const timeSplit = new Date().toLocaleTimeString().split(":")[0] + ":" + new Date().toLocaleTimeString().split(":")[1];
+    const randomInteger = Math.floor(Math.random() * 300);
+
+    if (!data.address) {
+        return {id: randomInteger,
+        sender: "assistant",
+        message: "Please connect your wallet to start using Neptume.",
+        timestamp: timeSplit,
+        neededInfo: {
+            chaindId: 0,
+            to: "",
+            abi: "",
+            wei: 0
+        },
+        jwt: ""
+        }
+    }
+
     try {
         console.log(apiEndpoint)
         const response = await fetch(`${apiEndpoint}/openai`, {
