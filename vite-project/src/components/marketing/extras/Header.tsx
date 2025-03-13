@@ -34,11 +34,11 @@ export default function Header() {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
+            <Link to="/checkout" className="text-white/80 hover:text-white transition-colors">
+              Subscribe
+            </Link>
             <Link to="#features" className="text-white/80 hover:text-white transition-colors">
               Features
-            </Link>
-            <Link to="#" className="text-white/80 hover:text-white transition-colors">
-              Documentation
             </Link>
             <Link to="#" className="text-white/80 hover:text-white transition-colors">
               Community

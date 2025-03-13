@@ -3,7 +3,7 @@ import './App.css'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { PrivyProvider } from '@privy-io/react-auth'
 import { base, polygon, mainnet, optimism, avalanche, worldchain, arbitrum, sepolia, baseSepolia} from 'viem/chains'
-import CheckoutForm from './components/payment/CheckoutForm'
+import CheckoutPage from './components/marketing/checkout'
 import CompletePage from './components/payment/CompletePage'
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -54,7 +54,7 @@ function App() {
       <Elements options={{clientSecret, appearance, loader}} stripe={stripePromise}>
       <Routes>
         <Route path="/" element={<MainPage />}></Route>
-        <Route path="/checkout" element={<CheckoutForm />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/complete" element={<CompletePage />} />
         <Route path="/mainpage" element={<MainPage />}></Route>
       </Routes>

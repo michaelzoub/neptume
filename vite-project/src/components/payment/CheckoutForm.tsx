@@ -50,7 +50,7 @@ export default function CheckoutForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-[30vw] min-w-[500px] self-center shadow-md rounded-lg p-10 my-auto mx-auto mt-10 bg-[#2a2a2a] text-white"
+      className="w-[30vw] min-w-[500px] self-center shadow-md rounded-lg p-10 my-auto mx-auto mt-10 bg-[#2a2a2a] text-white z-[1000]"
     >
       <PaymentElement options={paymentElementOptions} className="mb-6" />
 
@@ -62,7 +62,7 @@ export default function CheckoutForm() {
           {isLoading ? (
             <div className="spinner animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
           ) : (
-            "Pay now"
+            "Subscribe to Neptume!"
           )}
         </span>
       </button>
